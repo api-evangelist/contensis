@@ -28,11 +28,11 @@ Image API ... Image transformations are real-time image manipulation and optimiz
 
 #### Tags:
 
-API
+ - API
 
 #### Properties
 
- - - [Documentation](https://www.contensis.com/help-and-docs/apis/image-api)
+- [Documentation](https://www.contensis.com/help-and-docs/apis/image-api)
 
 ## Maintainers
 
