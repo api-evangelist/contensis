@@ -4,8 +4,7 @@ url: >-
 apis:
   - aid: contensis:contensis
     name: Contensis
-    tags:
-      - API
+    tags: []
     humanURL: https://www.contensis.com/help-and-docs/apis/image-api
     properties:
       - url: https://www.contensis.com/help-and-docs/apis/image-api
@@ -16,8 +15,8 @@ apis:
       The Image API ...
 name: Contensis
 tags:
-  - Content
   - CMS
+  - Content
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
