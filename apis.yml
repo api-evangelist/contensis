@@ -7,7 +7,7 @@ description: >-
   Zengenti, designed to help organizations create, manage, and deliver digital
   content across multiple platforms and devices through HTTP, JavaScript, and
   .Net APIs.
-type: Contract
+kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 position: Consuming
