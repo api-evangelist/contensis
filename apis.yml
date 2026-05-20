@@ -86,6 +86,10 @@ apis:
       image delivery for responsive, multi-device experiences.
 
 common:
+  - type: GitHubOrganization
+    url: https://github.com/contensis
+  - type: LinkedIn
+    url: https://www.linkedin.com/showcase/contensis
   - type: Website
     url: https://www.contensis.com/
   - type: Documentation
