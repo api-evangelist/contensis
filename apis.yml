@@ -8,7 +8,7 @@ description: >-
   content across multiple platforms and devices through HTTP, JavaScript, and
   .Net APIs.
 kind: contract
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 position: Consuming
 tags:
@@ -25,7 +25,7 @@ apis:
       - Content Delivery
       - Headless CMS
       - REST
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
     properties:
       - url: https://www.contensis.com/help-and-docs/apis/delivery-http
@@ -48,7 +48,7 @@ apis:
       - CRUD
       - Headless CMS
       - REST
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.contensis.com/help-and-docs/apis/management-http
     properties:
       - url: https://www.contensis.com/help-and-docs/apis/management-http
@@ -71,7 +71,7 @@ apis:
       - Images
       - Media
       - Transformation
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.contensis.com/help-and-docs/apis/image-api
     properties:
       - url: https://www.contensis.com/help-and-docs/apis/image-api
