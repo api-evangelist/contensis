@@ -86,6 +86,12 @@ apis:
       image delivery for responsive, multi-device experiences.
 
 common:
+  - type: TrustCenter
+    url: security/contensis-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/contensis-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/contensis-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/contensis
   - type: LinkedIn
