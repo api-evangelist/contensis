@@ -2,19 +2,21 @@
   "repo": "contensis",
   "feeds": [
     {
-      "source": "https://www.contensis.com/community/blog",
-      "feed_url": "",
+      "source": "https://www.contensis.com/community/blog/developing-with-the-contensis-image-api",
+      "feed_url": "https://www.contensis.com/community/blog/developing-with-the-contensis-image-api",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     },
     {
-      "source": "https://www.contensis.com/community/blog/developing-with-the-contensis-image-api",
-      "feed_url": "",
+      "source": "https://www.contensis.com/help-and-docs/apis",
+      "feed_url": "https://www.contensis.com/help-and-docs/apis",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     }
   ],
-  "post_count": 2,
-  "fetched": "2026-06-27T12:33:56Z",
-  "agent_pulled": "2026-06-27"
+  "post_count": 5,
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
