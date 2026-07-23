@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: Contensis Delivery API (HTTP) Content Types API
+  description: 'The Contensis Delivery API is a read-only RESTful HTTP API that returns
+
+    content as JSON (or as resource files for assets) from a Contensis CMS
+
+    project. The base URL is the host name of the Contensis instance the
+
+    project lives on (for example `https://cms.example.contensis.com`). All
+
+    requests target the `/api/delivery` namespace.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Contensis Help and Docs
+    url: https://www.contensis.com/help-and-docs/apis/delivery-http
+servers:
+- url: https://{instance}.contensis.com
+  description: Contensis CMS instance
+  variables:
+    instance:
+      default: cms
+      description: The Contensis instance hostname prefix
+tags:
+- name: Content Types
+paths:
+  /api/delivery/projects/{projectId}/contenttypes:
+    get:
+      tags:
+      - Content Types
+      summary: List content types for a project
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of content types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentType'
+  /api/delivery/projects/{projectId}/contenttypes/{contentTypeId}:
+    get:
+      tags:
+      - Content Types
+      summary: Get a single content type
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: contentTypeId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A content type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentType'
+components:
+  schemas:
+    ContentType:
+      type: object
+      properties:
+        id:
+          type: string
+        projectId:
+          type: string
+        description:
+          type: object
+          additionalProperties:
+            type: string
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              dataType:
+                type: string
+              dataFormat:
+                type: string

@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  title: Contensis Delivery API (HTTP) Content Types Taxonomy API
+  description: 'The Contensis Delivery API is a read-only RESTful HTTP API that returns
+
+    content as JSON (or as resource files for assets) from a Contensis CMS
+
+    project. The base URL is the host name of the Contensis instance the
+
+    project lives on (for example `https://cms.example.contensis.com`). All
+
+    requests target the `/api/delivery` namespace.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Contensis Help and Docs
+    url: https://www.contensis.com/help-and-docs/apis/delivery-http
+servers:
+- url: https://{instance}.contensis.com
+  description: Contensis CMS instance
+  variables:
+    instance:
+      default: cms
+      description: The Contensis instance hostname prefix
+tags:
+- name: Taxonomy
+paths:
+  /api/delivery/projects/{projectId}/taxonomy/nodes:
+    get:
+      tags:
+      - Taxonomy
+      summary: List taxonomy nodes
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of taxonomy nodes

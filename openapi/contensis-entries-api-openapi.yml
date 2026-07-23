@@ -1,0 +1,201 @@
+openapi: 3.1.0
+info:
+  title: Contensis Delivery API (HTTP) Content Types Entries API
+  description: 'The Contensis Delivery API is a read-only RESTful HTTP API that returns
+
+    content as JSON (or as resource files for assets) from a Contensis CMS
+
+    project. The base URL is the host name of the Contensis instance the
+
+    project lives on (for example `https://cms.example.contensis.com`). All
+
+    requests target the `/api/delivery` namespace.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Contensis Help and Docs
+    url: https://www.contensis.com/help-and-docs/apis/delivery-http
+servers:
+- url: https://{instance}.contensis.com
+  description: Contensis CMS instance
+  variables:
+    instance:
+      default: cms
+      description: The Contensis instance hostname prefix
+tags:
+- name: Entries
+paths:
+  /api/delivery/projects/{projectId}/entries:
+    get:
+      tags:
+      - Entries
+      summary: List entries in a project
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: versionStatus
+        schema:
+          type: string
+          enum:
+          - published
+          - latest
+          default: published
+      - in: query
+        name: language
+        schema:
+          type: string
+      - in: query
+        name: pageIndex
+        schema:
+          type: integer
+          default: 0
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+          default: 25
+      - in: query
+        name: order
+        description: Comma-separated field IDs; prefix with `-` for descending
+        schema:
+          type: string
+      - in: query
+        name: linkDepth
+        description: Resolve linked entries up to depth 10
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 10
+          default: 0
+      responses:
+        '200':
+          description: A page of entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryList'
+  /api/delivery/projects/{projectId}/entries/{entryId}:
+    get:
+      tags:
+      - Entries
+      summary: Get a single entry
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: language
+        schema:
+          type: string
+      - in: query
+        name: versionStatus
+        schema:
+          type: string
+          enum:
+          - published
+          - latest
+          default: published
+      - in: query
+        name: linkDepth
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: An entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entry'
+        '404':
+          description: Entry not found
+  /api/delivery/projects/{projectId}/entries/search:
+    get:
+      tags:
+      - Entries
+      summary: Search entries
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: q
+        schema:
+          type: string
+      - in: query
+        name: language
+        schema:
+          type: string
+      - in: query
+        name: pageIndex
+        schema:
+          type: integer
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryList'
+components:
+  schemas:
+    Entry:
+      type: object
+      properties:
+        sys:
+          type: object
+          properties:
+            id:
+              type: string
+            contentTypeId:
+              type: string
+            projectId:
+              type: string
+            language:
+              type: string
+            version:
+              type: object
+              properties:
+                versionNo:
+                  type: string
+                published:
+                  type: string
+                  format: date-time
+                created:
+                  type: string
+                  format: date-time
+                modified:
+                  type: string
+                  format: date-time
+      additionalProperties: true
+    EntryList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        pageIndex:
+          type: integer
+        pageSize:
+          type: integer
+        totalCount:
+          type: integer
