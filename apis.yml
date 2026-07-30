@@ -8,7 +8,19 @@ description: >-
   content across multiple platforms and devices through HTTP, JavaScript, and
   .Net APIs.
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/contensis.png
 access: 3rd-Party
 position: Consuming
 tags:
@@ -19,72 +31,100 @@ created: '2024-11-13'
 modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: contensis:delivery-api
-    name: Contensis Delivery API
-    tags:
-      - Content Delivery
-      - Headless CMS
-      - REST
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
-    properties:
-      - url: https://www.contensis.com/help-and-docs/apis/delivery-http
-        type: Documentation
-      - url: https://www.contensis.com/help-and-docs/apis/delivery-js
-        type: JavaScript
-      - url: https://www.contensis.com/help-and-docs/apis/delivery-net
-        type: .Net
-    description: >-
-      The Contensis Delivery API focuses on delivering content created in
-      content types and entries to websites and applications. It is a read-only
-      HTTP API designed for high-performance content retrieval, with official
-      JavaScript and .Net client wrappers available for integration into modern
-      front-end frameworks.
-
-  - aid: contensis:management-api
-    name: Contensis Management API
-    tags:
-      - Content Management
-      - CRUD
-      - Headless CMS
-      - REST
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.contensis.com/help-and-docs/apis/management-http
-    properties:
-      - url: https://www.contensis.com/help-and-docs/apis/management-http
-        type: Documentation
-      - url: https://www.contensis.com/help-and-docs/apis/management-js
-        type: JavaScript
-      - url: https://www.contensis.com/help-and-docs/apis/management-net
-        type: .Net
-    description: >-
-      The Contensis Management API allows developers to import and manage
-      content within content types and entries. It provides full CRUD access
-      to content models, entries, projects, and related resources, enabling
-      headless content workflows, migrations, and integrations with editorial
-      tooling.
-
-  - aid: contensis:image-api
-    name: Contensis Image API
-    tags:
-      - Asset Delivery
-      - Images
-      - Media
-      - Transformation
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.contensis.com/help-and-docs/apis/image-api
-    properties:
-      - url: https://www.contensis.com/help-and-docs/apis/image-api
-        type: Documentation
-      - url: https://www.contensis.com/community/blog/developing-with-the-contensis-image-api
-        type: Blog
-    description: >-
-      The Contensis Image API provides real-time image manipulation and
-      optimization features as part of the Delivery API. It supports on-the-fly
-      transformations such as resizing, cropping, format conversion, and
-      quality adjustment via URL query parameters, and is designed to speed up
-      image delivery for responsive, multi-device experiences.
-
+- aid: contensis:delivery-api
+  name: Contensis Delivery API
+  tags:
+  - Content Delivery
+  - Headless CMS
+  - REST
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  properties:
+  - url: https://www.contensis.com/help-and-docs/apis/delivery-http
+    type: Documentation
+  - url: https://www.contensis.com/help-and-docs/apis/delivery-js
+    type: JavaScript
+  - url: https://www.contensis.com/help-and-docs/apis/delivery-net
+    type: .Net
+  description: >-
+    The Contensis Delivery API focuses on delivering content created in content types and entries to websites
+    and applications. It is a read-only HTTP API designed for high-performance content retrieval, with
+    official JavaScript and .Net client wrappers available for integration into modern front-end frameworks.
+- aid: contensis:management-api
+  name: Contensis Management API
+  tags:
+  - Content Management
+  - CRUD
+  - Headless CMS
+  - REST
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.contensis.com/help-and-docs/apis/management-http
+  properties:
+  - url: https://www.contensis.com/help-and-docs/apis/management-http
+    type: Documentation
+  - url: https://www.contensis.com/help-and-docs/apis/management-js
+    type: JavaScript
+  - url: https://www.contensis.com/help-and-docs/apis/management-net
+    type: .Net
+  description: >-
+    The Contensis Management API allows developers to import and manage content within content types and
+    entries. It provides full CRUD access to content models, entries, projects, and related resources,
+    enabling headless content workflows, migrations, and integrations with editorial tooling.
+- aid: contensis:image-api
+  name: Contensis Image API
+  tags:
+  - Asset Delivery
+  - Images
+  - Media
+  - Transformation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.contensis.com/help-and-docs/apis/image-api
+  properties:
+  - url: https://www.contensis.com/help-and-docs/apis/image-api
+    type: Documentation
+  - url: https://www.contensis.com/community/blog/developing-with-the-contensis-image-api
+    type: Blog
+  description: >-
+    The Contensis Image API provides real-time image manipulation and optimization features as part of
+    the Delivery API. It supports on-the-fly transformations such as resizing, cropping, format conversion,
+    and quality adjustment via URL query parameters, and is designed to speed up image delivery for responsive,
+    multi-device experiences.
+- aid: contensis:contensis-content-types-api
+  name: Contensis Content Types API
+  description: The Content Types API from Contensis — 2 operation(s) for content types.
+  humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  tags:
+  - Content Types
+  properties:
+  - type: OpenAPI
+    url: openapi/contensis-content-types-api-openapi.yml
+- aid: contensis:contensis-entries-api
+  name: Contensis Entries API
+  description: The Entries API from Contensis — 3 operation(s) for entries.
+  humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  tags:
+  - Entries
+  properties:
+  - type: OpenAPI
+    url: openapi/contensis-entries-api-openapi.yml
+- aid: contensis:contensis-projects-api
+  name: Contensis Projects API
+  description: The Projects API from Contensis — 1 operation(s) for projects.
+  humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/contensis-projects-api-openapi.yml
+- aid: contensis:contensis-taxonomy-api
+  name: Contensis Taxonomy API
+  description: The Taxonomy API from Contensis — 1 operation(s) for taxonomy.
+  humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  tags:
+  - Taxonomy
+  properties:
+  - type: OpenAPI
+    url: openapi/contensis-taxonomy-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/contensis-agentic-access.yml
