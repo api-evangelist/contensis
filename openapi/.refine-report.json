@@ -1,0 +1,20 @@
+{
+  "provider": "contensis",
+  "sources": [
+    "contensis-content-types-api-openapi.yml",
+    "contensis-entries-api-openapi.yml",
+    "contensis-projects-api-openapi.yml",
+    "contensis-taxonomy-api-openapi.yml"
+  ],
+  "outputs": [
+    "contensis-content-types-api-openapi.yml",
+    "contensis-entries-api-openapi.yml",
+    "contensis-projects-api-openapi.yml",
+    "contensis-taxonomy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
