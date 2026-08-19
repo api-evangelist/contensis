@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "941779a6-86a2-4fc0-a14a-3271c022cb38",
+      "name": "Content Types",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d6c3bf2d-7c79-48c1-9457-5a408cf70238",
+          "name": "List content types for a project",
+          "request": {
+            "name": "List content types for a project",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "delivery",
+                "projects",
+                ":projectId",
+                "contenttypes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The Contensis instance hostname prefix",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38acc906-3b07-4380-a17f-a4c35b6f3f24",
+              "name": "A list of content types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "contenttypes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"projectId\": \"string\",\n    \"description\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"fields\": [\n      {\n        \"id\": \"string\",\n        \"dataType\": \"string\",\n        \"dataFormat\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"dataType\": \"string\",\n        \"dataFormat\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"projectId\": \"string\",\n    \"description\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"fields\": [\n      {\n        \"id\": \"string\",\n        \"dataType\": \"string\",\n        \"dataFormat\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"dataType\": \"string\",\n        \"dataFormat\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f94c52a-141f-4cc5-8c92-670a1cc346f3",
+          "name": "Get a single content type",
+          "request": {
+            "name": "Get a single content type",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "delivery",
+                "projects",
+                ":projectId",
+                "contenttypes",
+                ":contentTypeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentTypeId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The Contensis instance hostname prefix",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25b7eee4-6a5c-44b7-bad6-aa2514ef5dc4",
+              "name": "A content type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "contenttypes",
+                    ":contentTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentTypeId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"projectId\": \"string\",\n  \"description\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"fields\": [\n    {\n      \"id\": \"string\",\n      \"dataType\": \"string\",\n      \"dataFormat\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"dataType\": \"string\",\n      \"dataFormat\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The Contensis instance hostname prefix",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "cms",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.contensis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cf6213dd-8bcd-4112-a531-b4d5dce21c9f",
+    "name": "Contensis Delivery API (HTTP) Content Types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Contensis Delivery API is a read-only RESTful HTTP API that returns\ncontent as JSON (or as resource files for assets) from a Contensis CMS\nproject. The base URL is the host name of the Contensis instance the\nproject lives on (for example `https://cms.example.contensis.com`). All\nrequests target the `/api/delivery` namespace.\n\n\nContact Support:\n Name: Contensis Help and Docs",
+      "type": "text/plain"
+    }
+  }
+}

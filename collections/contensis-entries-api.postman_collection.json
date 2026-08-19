@@ -1,0 +1,561 @@
+{
+  "item": [
+    {
+      "id": "140a2d31-7335-44ff-8741-0ad3ac83bce8",
+      "name": "Entries",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4d0b8c4a-042d-401b-9393-db74223bc430",
+          "name": "List entries in a project",
+          "request": {
+            "name": "List entries in a project",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "delivery",
+                "projects",
+                ":projectId",
+                "entries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "versionStatus",
+                  "value": "published"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageIndex",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Comma-separated field IDs; prefix with `-` for descending"
+                },
+                {
+                  "disabled": false,
+                  "key": "linkDepth",
+                  "value": "0",
+                  "description": "Resolve linked entries up to depth 10"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The Contensis instance hostname prefix",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac72a1f5-c7b0-4a66-9f67-d9c3201377a2",
+              "name": "A page of entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionStatus",
+                      "value": "published"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "linkDepth",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"sys\": {\n        \"id\": \"string\",\n        \"contentTypeId\": \"string\",\n        \"projectId\": \"string\",\n        \"language\": \"string\",\n        \"version\": {\n          \"versionNo\": \"string\",\n          \"published\": \"2017-03-01T19:56:05.441Z\",\n          \"created\": \"1952-01-03T08:16:10.553Z\",\n          \"modified\": \"1981-06-09T12:31:56.044Z\"\n        }\n      }\n    },\n    {\n      \"sys\": {\n        \"id\": \"string\",\n        \"contentTypeId\": \"string\",\n        \"projectId\": \"string\",\n        \"language\": \"string\",\n        \"version\": {\n          \"versionNo\": \"string\",\n          \"published\": \"1950-06-29T04:15:44.391Z\",\n          \"created\": \"2016-04-28T19:29:40.821Z\",\n          \"modified\": \"1979-06-06T06:26:35.684Z\"\n        }\n      },\n      \"key_0\": \"string\"\n    }\n  ],\n  \"pageIndex\": 328,\n  \"pageSize\": 7824,\n  \"totalCount\": 8478\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30934f70-8311-4c39-8686-2dfe5f8f945a",
+          "name": "Get a single entry",
+          "request": {
+            "name": "Get a single entry",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "delivery",
+                "projects",
+                ":projectId",
+                "entries",
+                ":entryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "versionStatus",
+                  "value": "published"
+                },
+                {
+                  "disabled": false,
+                  "key": "linkDepth",
+                  "value": "0"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entryId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The Contensis instance hostname prefix",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "818cca63-9f71-4f32-a93c-aeb97e4ce441",
+              "name": "An entry",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "entries",
+                    ":entryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionStatus",
+                      "value": "published"
+                    },
+                    {
+                      "key": "linkDepth",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entryId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sys\": {\n    \"id\": \"string\",\n    \"contentTypeId\": \"string\",\n    \"projectId\": \"string\",\n    \"language\": \"string\",\n    \"version\": {\n      \"versionNo\": \"string\",\n      \"published\": \"1973-07-21T08:36:47.964Z\",\n      \"created\": \"2011-11-14T00:09:56.174Z\",\n      \"modified\": \"1967-08-09T08:52:02.169Z\"\n    }\n  },\n  \"key_0\": 7332,\n  \"key_1\": \"string\",\n  \"key_2\": 805\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "381e90b7-6a59-416d-9f48-b7c6eacec015",
+              "name": "Entry not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "entries",
+                    ":entryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionStatus",
+                      "value": "published"
+                    },
+                    {
+                      "key": "linkDepth",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entryId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b715935a-8e1d-4282-8282-ef5027dbe850",
+          "name": "Search entries",
+          "request": {
+            "name": "Search entries",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "delivery",
+                "projects",
+                ":projectId",
+                "entries",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageIndex",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The Contensis instance hostname prefix",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a10c42ea-c0d0-4d17-bdd1-67da8836e280",
+              "name": "Search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "entries",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"sys\": {\n        \"id\": \"string\",\n        \"contentTypeId\": \"string\",\n        \"projectId\": \"string\",\n        \"language\": \"string\",\n        \"version\": {\n          \"versionNo\": \"string\",\n          \"published\": \"2017-03-01T19:56:05.441Z\",\n          \"created\": \"1952-01-03T08:16:10.553Z\",\n          \"modified\": \"1981-06-09T12:31:56.044Z\"\n        }\n      }\n    },\n    {\n      \"sys\": {\n        \"id\": \"string\",\n        \"contentTypeId\": \"string\",\n        \"projectId\": \"string\",\n        \"language\": \"string\",\n        \"version\": {\n          \"versionNo\": \"string\",\n          \"published\": \"1950-06-29T04:15:44.391Z\",\n          \"created\": \"2016-04-28T19:29:40.821Z\",\n          \"modified\": \"1979-06-06T06:26:35.684Z\"\n        }\n      },\n      \"key_0\": \"string\"\n    }\n  ],\n  \"pageIndex\": 328,\n  \"pageSize\": 7824,\n  \"totalCount\": 8478\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The Contensis instance hostname prefix",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "cms",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.contensis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d10e9445-6e8d-4823-8e0d-90d33fdf9a21",
+    "name": "Contensis Delivery API (HTTP) Content Types Entries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Contensis Delivery API is a read-only RESTful HTTP API that returns\ncontent as JSON (or as resource files for assets) from a Contensis CMS\nproject. The base URL is the host name of the Contensis instance the\nproject lives on (for example `https://cms.example.contensis.com`). All\nrequests target the `/api/delivery` namespace.\n\n\nContact Support:\n Name: Contensis Help and Docs",
+      "type": "text/plain"
+    }
+  }
+}

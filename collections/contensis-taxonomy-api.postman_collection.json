@@ -1,0 +1,134 @@
+{
+  "item": [
+    {
+      "id": "6c52a8fc-d8dc-42be-8164-7ec8745a6ce5",
+      "name": "Taxonomy",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74987e4e-d7a6-4d4b-a6a4-fd7ffaf7db43",
+          "name": "List taxonomy nodes",
+          "request": {
+            "name": "List taxonomy nodes",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "delivery",
+                "projects",
+                ":projectId",
+                "taxonomy",
+                "nodes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The Contensis instance hostname prefix",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8538be32-f8c7-48d8-918c-7e1fbefcbd58",
+              "name": "A list of taxonomy nodes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "delivery",
+                    "projects",
+                    ":projectId",
+                    "taxonomy",
+                    "nodes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The Contensis instance hostname prefix",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The Contensis instance hostname prefix",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "cms",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.contensis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9ba92ab3-f280-4687-b6b1-faf1553e1bf8",
+    "name": "Contensis Delivery API (HTTP) Content Types Taxonomy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Contensis Delivery API is a read-only RESTful HTTP API that returns\ncontent as JSON (or as resource files for assets) from a Contensis CMS\nproject. The base URL is the host name of the Contensis instance the\nproject lives on (for example `https://cms.example.contensis.com`). All\nrequests target the `/api/delivery` namespace.\n\n\nContact Support:\n Name: Contensis Help and Docs",
+      "type": "text/plain"
+    }
+  }
+}

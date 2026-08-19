@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Contensis Delivery API (HTTP) Content Types API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Content Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List content types for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.contensis.com/api/delivery/projects/:projectId/contenttypes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List content types for a project"
+        },
+        {
+          "info": {
+            "name": "Get a single content type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.contensis.com/api/delivery/projects/:projectId/contenttypes/:contentTypeId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "contentTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single content type"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
