@@ -74,6 +74,11 @@ apis:
   name: Contensis Image API
   tags:
   - Asset Delivery
+  - Image
+  - Media
+  - Transformation
+  tags_raw:
+  - Asset Delivery
   - Images
   - Media
   - Transformation
@@ -112,6 +117,8 @@ apis:
   description: The Projects API from Contensis — 1 operation(s) for projects.
   humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
