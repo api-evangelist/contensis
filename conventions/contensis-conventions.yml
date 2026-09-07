@@ -1,0 +1,208 @@
+specification: API Commons Conventions
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  The Contensis HTTP Delivery and Management API reference at
+  https://www.contensis.com/help-and-docs/apis, read through the provider's own markdown
+  mirror https://github.com/contensis/contensis-docs, plus openapi/ in this repo for the
+  captured Delivery operations.
+description: >-
+  Cross-cutting runtime semantics for the Contensis HTTP APIs — how an agent authenticates,
+  pages, expands, filters, versions, fails and (critically) undoes. Contensis is strong on
+  content-shaping conventions and weak on protocol-safety conventions: link expansion,
+  sparse fields, localisation and paging are all first class, while idempotency, rate-limit
+  signalling and request tracing are absent.
+auth:
+  style: >-
+    Two schemes. Delivery: an unscoped environment-wide access token in the Authorization
+    header (or an accessToken query parameter). Management: OAuth 2.0 client_credentials
+    against a per-tenant token endpoint, Bearer token, 3600s.
+  detail: authentication/contensis-authentication.yml
+base_url:
+  pattern: https://cms-{alias}.cloud.contensis.com
+  staging_pattern: https://staging-{alias}.cloud.contensis.com
+  note: >-
+    Per-tenant. There is no single shared api.contensis.com host — the alias is the
+    customer's Contensis environment. Namespaces are /api/delivery and /api/management.
+  evidence: https://github.com/contensis/cli/blob/main/packages/contensis-cli/README.md
+pagination:
+  style: page-index
+  request_params:
+    - name: pageIndex
+      in: query
+      description: Zero-based index of the page.
+    - name: pageSize
+      in: query
+      default: 25
+      description: Number of results per page.
+  response_fields:
+    - pageIndex
+    - pageSize
+    - totalCount
+    - pageCount
+    - items
+  cursor: false
+  note: >-
+    Offset paging with a total count. Simple to drive, but it is the shape that skips and
+    repeats rows when content changes mid-walk — relevant for an agent crawling a large
+    entry set.
+  docs: https://www.contensis.com/help-and-docs/apis/management-http/content/paging/paged-list
+expansion:
+  style: link-depth
+  params:
+    - name: linkDepth
+      description: >-
+        Depth at which linked entries and assets are resolved inline. Maximum 10.
+    - name: fieldLinkDepths
+      description: >-
+        Per-field-path link depths, so one field can be expanded deeply while the rest stay
+        shallow. Contensis version 16+ only.
+  note: >-
+    This is Contensis' answer to the N+1 problem and it is unusually good — per-path depth
+    control is rarer than a global expand flag.
+sparse_fields:
+  param: fields
+  style: comma-separated field ids
+  description: Restrict which fields come back for an entry.
+sorting:
+  param: order
+  style: comma-separated field ids, prefix with `-` for descending
+filtering:
+  style: ZenQL and a JSON search expression language
+  description: >-
+    Contensis ships its own query language (ZenQL) plus a structured search expression API
+    with operators, weighting and composer-field querying. It is a real query surface, not
+    a couple of filter params.
+  docs: https://www.contensis.com/help-and-docs/apis/delivery-http/search-basics
+localization:
+  param: language
+  style: BCP 47 language tag per request
+  description: >-
+    Language is a request-level dimension across both APIs. Entries carry language
+    variations; a delete can target named variations.
+versioning:
+  api_versioning:
+    style: none-in-path
+    note: >-
+      The paths are unversioned (/api/delivery, /api/management). Capability is gated on
+      the CMS product version instead — the docs mark features like fieldLinkDepths as
+      "version 16+ only", and the reference itself has been served under versioned doc URLs
+      (e.g. .../delivery/http/v/11.3/...). An agent cannot ask the API which version it is
+      talking to.
+  content_versioning:
+    style: sys.version envelope on every resource
+    fields: [createdBy, created, modifiedBy, modified, publishedBy, published, versionNo]
+    note: >-
+      Every entry, content type and webhook subscription carries a version block. This is
+      genuinely useful state for an agent deciding whether it is safe to write.
+  version_status:
+    param: versionStatus
+    values: [published, latest]
+    default: published
+    note: >-
+      The read/write split an agent needs: `published` is what the world sees, `latest` is
+      the working draft.
+request_id:
+  inbound: none documented
+  outbound: >-
+    No request-id or trace header is documented. The only correlation handle is `logId`
+    inside an error body, which exists only on failure and is only resolvable by someone
+    with Contensis log-search access.
+error_envelope:
+  format: proprietary
+  detail: errors/contensis-problem-types.yml
+rate_limit_signalling:
+  headers: none documented
+  status_on_exhaustion: none documented
+  detail: rate-limits/contensis-rate-limits.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  scope: []
+  note: >-
+    No Idempotency-Key header, no client-supplied request id, no documented replay
+    protection anywhere in the Management API reference. Entry creation is a POST that mints
+    a server-side GUID, so a retried create produces a second entry. Updates are
+    last-writer-wins against sys.version rather than an ETag/If-Match precondition — the
+    version block is readable but no conditional-request header is documented for it. An
+    agent retrying a timed-out write has no safe primitive here.
+  evidence: https://www.contensis.com/help-and-docs/apis/management-http/content/entries
+dry_run_mode:
+  supported: false
+  note: >-
+    No preview/validate/dry-run mode is documented for Management API writes. The nearest
+    equivalent is workflow: content can be created in a Draft state and published as a
+    separate step, which lets a write be staged but not rehearsed.
+reversibility:
+  grade: verified
+  summary: >-
+    Contensis is unusually strong here. Entry deletion is soft by default — it goes to a
+    recycle bin — and the provider states the window in its own documentation.
+  surfaces:
+    - operation: Delete an entry
+      method: DELETE
+      path: /api/management/projects/{projectId}/entries/{entryId}
+      operationId: null
+      destructive: true
+      reversal: Restore an entry (recycle bin)
+      reversal_operation_id: null
+      reversal_surface: >-
+        Management console — Settings > Recycle bin > Actions > Restore entry. No
+        documented HTTP endpoint for restore was found; the reversal is UI-driven.
+      window: >-
+        Up to 90 days from the date the entry was deleted. A restored entry returns in the
+        Draft workflow state, ready to be edited or republished.
+      window_source: https://www.contensis.com/help-and-docs/guides/authoring-and-managing-content/entries/restore-an-entry
+      irreversible_when: >-
+        The `permanent=true` query parameter bypasses the recycle bin entirely. There is no
+        recovery path after a permanent delete. Any agent given Entry_Delete must be
+        prevented from setting this flag.
+      evidence: https://www.contensis.com/help-and-docs/apis/management-http/content/entries/delete-an-entry
+    - operation: Publish an entry (invoke workflow)
+      method: POST
+      path: /api/management/projects/{projectId}/entries/{entryId}/workflow/events
+      operationId: null
+      destructive: false
+      reversal: Unpublish an entry
+      reversal_surface: >-
+        The same workflow events endpoint with an unpublish trigger. Publish and unpublish
+        are symmetric workflow transitions, so publication is fully reversible.
+      window: No window — the transition can be reversed at any time.
+      evidence: https://www.contensis.com/help-and-docs/apis/management-http/content/entries/unpublish-an-entry
+    - operation: Update an entry
+      method: PUT / PATCH
+      path: /api/management/projects/{projectId}/entries/{entryId}
+      destructive: partial
+      reversal: >-
+        Entry version history. Every entry carries sys.version with versionNo and the
+        modifiedBy/modified pair, and Contensis documents entry versioning in the authoring
+        guides.
+      window: not stated
+      note: >-
+        Version history exists and is documented, but no API operation for reverting an
+        entry to a prior version was found in the reference, and no retention window is
+        stated. Documented, not verified, for this surface.
+      evidence: https://www.contensis.com/help-and-docs/guides/authoring-and-managing-content/entries/entry-versioning
+    - operation: Delete a project / content type / component
+      destructive: true
+      reversal: none documented
+      window: null
+      note: >-
+        The recycle bin is documented for entries. Nothing equivalent is documented for
+        structural deletes — deleting a content type or a project has no stated undo.
+  applicability: >-
+    The Delivery API is read-only, so reversibility, idempotency and dry-run are all `na`
+    for it. Everything above concerns the Management API.
+cross_links:
+  authentication: authentication/contensis-authentication.yml
+  scopes: scopes/contensis-scopes.yml
+  errors: errors/contensis-problem-types.yml
+  lifecycle: lifecycle/contensis-lifecycle.yml
+  rate_limits: rate-limits/contensis-rate-limits.yml
+  webhooks: asyncapi/contensis-webhooks.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

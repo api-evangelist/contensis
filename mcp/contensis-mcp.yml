@@ -1,0 +1,102 @@
+specification: API Commons MCP
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: derived
+status: candidate
+source: >-
+  Derived from openapi/_original/contensis-openapi.yml in this repo after a search for a
+  first-party server found none. Searched: the Contensis GitHub organisation (26 public
+  repositories, none MCP), the npm registry (no @contensis or contensis-scoped MCP
+  package), the Contensis documentation at https://www.contensis.com/help-and-docs/apis
+  and its markdown mirror https://github.com/contensis/contensis-docs, and general web
+  search.
+description: >-
+  Contensis ships no MCP server. It has an unusual agent posture for a CMS — it publishes
+  Agent Skills (github.com/contensis/he-content-skills) and it maintains a markdown mirror
+  of its documentation explicitly for AI coding tools, indexed by Context7 — but neither of
+  those is a callable tool surface. The candidate tool list below is derived by API
+  Evangelist from the Delivery API operations captured in openapi/. It is not published by
+  Contensis, no endpoint exists, and nothing here should be read as an agent surface the
+  provider offers.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+  note: >-
+    No hosted endpoint and no stdio package. `auth: unknown` because no server exists to
+    have an auth model. Were one to be built, the Delivery API would need the
+    environment-wide access token and the Management API an OAuth 2.0 client-credentials
+    pair — see authentication/contensis-authentication.yml.
+provider_agent_surfaces:
+  - kind: agent-skills
+    url: https://github.com/contensis/he-content-skills
+    note: >-
+      Five published Agent Skills plus four Claude Code subagents. Real, first-party, and
+      saved verbatim under skills/ — but they are prompt specifications for content work,
+      not tools that call Contensis.
+  - kind: docs-for-agents
+    url: https://github.com/contensis/contensis-docs
+    note: >-
+      Contensis publishes its documentation as markdown "optimized for AI-powered
+      development tools", synced from contensis.com and indexed by Context7 for use via
+      MCP. That makes Contensis documentation reachable over MCP through a third party; it
+      does not make the Contensis API reachable over MCP.
+  - kind: ai-search-components
+    url: https://github.com/contensis/insytful-ai-search-components
+    note: A shipped AI search/chat UI library. A product feature, not an agent interface.
+candidate_tools:
+  note: >-
+    Derived one-to-one from the seven Delivery API operations in
+    openapi/_original/contensis-openapi.yml. The captured spec carries no operationIds, so
+    the rest[] bindings below name method + path, which is what actually exists. Read-only:
+    the captured surface is the Delivery API, which cannot write.
+  tools:
+    - name: get_project
+      description: Get a Contensis project by id.
+      rest: GET /api/delivery/projects/{projectId}
+      inputs: [projectId, language]
+      consequence: read
+    - name: list_content_types
+      description: List the content types defined in a project.
+      rest: GET /api/delivery/projects/{projectId}/contenttypes
+      inputs: [projectId]
+      consequence: read
+    - name: get_content_type
+      description: Get a single content type, including its field definitions.
+      rest: GET /api/delivery/projects/{projectId}/contenttypes/{contentTypeId}
+      inputs: [projectId, contentTypeId]
+      consequence: read
+    - name: list_entries
+      description: List entries in a project, with paging, ordering, field selection and link expansion.
+      rest: GET /api/delivery/projects/{projectId}/entries
+      inputs: [projectId, versionStatus, linkDepth, fieldLinkDepths, pageIndex, pageSize, order, fields, language]
+      consequence: read
+    - name: get_entry
+      description: Get a single entry by id.
+      rest: GET /api/delivery/projects/{projectId}/entries/{entryId}
+      inputs: [projectId, entryId, versionStatus, linkDepth, language]
+      consequence: read
+    - name: search_entries
+      description: Search entries in a project.
+      rest: GET /api/delivery/projects/{projectId}/entries/search
+      inputs: [projectId, query]
+      consequence: read
+    - name: list_taxonomy_nodes
+      description: List taxonomy nodes for a project.
+      rest: GET /api/delivery/projects/{projectId}/taxonomy/nodes
+      inputs: [projectId]
+      consequence: read
+not_covered:
+  - >-
+    The entire Management API write surface — create/update/delete/publish entries, content
+    types, components, nodes, assets, roles, webhook subscriptions, blocks. No OpenAPI
+    exists for it in this repo, so no candidate tools were derived; deriving them from prose
+    would mean inventing operations.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

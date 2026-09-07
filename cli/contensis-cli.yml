@@ -1,0 +1,117 @@
+specification: API Commons CLI
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://github.com/contensis/cli — packages/contensis-cli/README.md (the published CLI
+  reference), https://github.com/contensis/homebrew-cli, the npm package contensis-cli and
+  the GitHub Releases feed for the same repo.
+name: Contensis CLI
+description: >-
+  A first-party command line interface and interactive shell for Contensis. It is not a
+  thin wrapper over one endpoint — it drives projects, content models, entries, tags, API
+  keys, roles, webhook subscriptions, blocks, renderers and proxies, and it can import
+  content models, tags and entries either from a file or directly from another Contensis
+  environment. It reads through the Management API by default and can be pointed at the
+  Delivery API for entry reads.
+repository: https://github.com/contensis/cli
+docs: https://github.com/contensis/cli/blob/main/packages/contensis-cli/README.md
+releases: https://github.com/contensis/cli/releases
+version: 1.6.0
+released: '2025-12-11'
+license: unverified
+install:
+  - method: homebrew
+    platforms: [macOS, Linux]
+    command: |
+      brew tap contensis/cli
+      brew trust contensis/cli
+      brew install contensis-cli
+    note: On Linux the formula is contensis-cli-linux.
+  - method: chocolatey
+    platforms: [Windows]
+    command: choco install contensis-cli
+  - method: npm
+    platforms: [any]
+    command: npm i --global contensis-cli
+    note: >-
+      Contensis recommends a binary install over the global npm module for anyone using nvm,
+      because switching node versions swaps the global module set.
+  - method: binary
+    platforms: [Windows, macOS, Linux]
+    command: Download from https://github.com/contensis/cli/releases and place on PATH
+  - method: docker
+    platforms: [any]
+    command: |
+      docker pull ghcr.io/contensis/cli/main/app:latest
+      docker run --rm -it ghcr.io/contensis/cli/main/app:latest
+    note: >-
+      Map a volume containing an environments.json file to persist connections between
+      container runs.
+  - method: npx
+    platforms: [any]
+    command: npx contensis-cli@prerelease
+    note: Prerelease channel; Contensis recommends Node.js v22.
+modes:
+  - name: shell
+    description: >-
+      Running the bare `contensis` command launches an interactive shell that uses exactly
+      the same command vocabulary as the CLI.
+  - name: cli
+    description: >-
+      The same commands run non-interactively, which is the shape intended for CI. The
+      README documents GitLab CI and GitHub CI usage and a headless mode.
+connection:
+  command: contensis connect <alias>
+  flags:
+    - '-a / --alias'
+    - '-p / --project-id'
+    - '-u / --user'
+    - '-pw / --password'
+    - '-id / --client-id'
+    - '-s / --shared-secret'
+  note: >-
+    Credentials can be supplied on any command; they set the local environment cache for
+    subsequent commands. Client id + shared secret is the same OAuth 2.0 client-credentials
+    pair documented for the Management API — see authentication/contensis-authentication.yml.
+command_groups:
+  - name: Environments
+    commands: [connect, login, list environments, set environment, remove environment]
+  - name: Projects
+    commands: [list projects, set project, get project, set project metadata, create project]
+  - name: Content models
+    commands: [list models, get model, list contenttypes, list components, get contenttype, get component]
+  - name: Entries
+    commands: [get entries, get entry, get entries with dependents, get entries by ZenQL, remove entries, copy field, update field]
+    note: >-
+      `get entries` can be routed through the Delivery API instead of the Management API,
+      output can be restricted to chosen fields, and results can be written to a file.
+  - name: Tags
+    commands: [list taggroups, list tags, create taggroup, create tags, remove tags, remove taggroup]
+  - name: API keys
+    commands: [list keys, create key, remove key]
+  - name: Roles
+    commands: [list roles, create role, set role, disable role, remove role]
+  - name: Webhooks
+    commands: [list subscriptions]
+    note: Read-only in the CLI — view webhook subscriptions.
+  - name: Blocks
+    commands: [list blocks, get block, get block logs, push block, execute block action]
+  - name: Renderers and proxies
+    commands: [list renderers, get renderer, list proxies, get proxy]
+  - name: Import
+    commands: [import contenttypes, import components, import tags, import entries, push asset]
+    note: >-
+      Import can source either from a file or from another connected Contensis environment,
+      which is the environment-to-environment promotion path.
+ci:
+  github_action: https://github.com/contensis/cli-action
+  block_push_action: https://github.com/contensis/block-push
+  note: >-
+    Contensis publishes two first-party GitHub Actions that wrap the CLI — one general
+    (cli-action) and one for pushing a block to a Contensis CMS (block-push).
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

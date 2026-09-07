@@ -1,0 +1,88 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: probed
+source: >-
+  Live unauthenticated HTTPS probes of every host this record knows — the registrable
+  domain and www (contensis.com), and the parent company domain (zengenti.com, Zengenti
+  Ltd is the company that builds Contensis). The Delivery and Management API hosts are
+  per-tenant and templated (https://cms-{alias}.cloud.contensis.com), so there is no
+  single provider-controlled API host to probe.
+description: >-
+  What Contensis serves under /.well-known/ across its public hosts. One document is
+  served: a valid security.txt on contensis.com (apex and www). Every other probed path
+  returns 404 — the 404s on openid-configuration, oauth-authorization-server and
+  api-catalog return the site's HTML 404 page, not a document.
+hosts:
+  - host: www.contensis.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: contensis-security.txt
+        content_type: text/plain
+        note: >-
+          Real RFC 9116 document — Contact, Preferred-Languages, Policy, Canonical and
+          Expires (2026-12-31). Feeds security/contensis-vulnerability-disclosure.yml.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        note: >-
+          Contensis does run OAuth 2.0 client_credentials, but the authorization server is
+          per-tenant at https://cms-{alias}.cloud.contensis.com/authenticate/connect/token
+          and is not advertised from the marketing domain.
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: contensis.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: contensis-security.txt
+        content_type: text/plain
+        note: Byte-identical to the www host; saved once.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: www.zengenti.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: zengenti.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+not_found:
+  - path: /.well-known/agent-card.json
+    hosts: [www.contensis.com]
+    status: 404
+  - path: /.well-known/agent.json
+    hosts: [www.contensis.com]
+    status: 404
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

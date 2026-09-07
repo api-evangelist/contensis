@@ -1,0 +1,90 @@
+specification: API Commons Error Catalog
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://www.contensis.com/help-and-docs/apis/management-http/key-concepts/errors (the
+  published error model, page last updated 21 June 2021) and the per-operation Responses
+  tables in the Delivery and Management API reference, cross-read against the provider's
+  markdown mirror at https://github.com/contensis/contensis-docs. Status codes were also
+  cross-checked against the responses in openapi/.
+docs:
+  - https://www.contensis.com/help-and-docs/apis/management-http/key-concepts/errors
+  - https://www.contensis.com/help-and-docs/apis/delivery-js/key-concepts/errors
+format: proprietary
+rfc9457: false
+content_type: application/json
+description: >-
+  Contensis publishes a single error envelope shared by the Delivery and Management APIs.
+  It is not RFC 9457 problem+json — there is no `type` URI, no `title`, no `status` and no
+  `instance`. It carries a correlation id (`logId`) that a Contensis administrator can look
+  up in the platform log search, a human message, a free-form `data` object with the
+  identifiers relevant to the failure, and a literal `type` string whose documented value
+  is always "error".
+envelope:
+  fields:
+    - name: logId
+      type: string
+      format: uuid
+      description: >-
+        Correlation id. Usable in Contensis log search to get the full detail. This is the
+        one field worth surfacing to a human when an agent gives up.
+    - name: message
+      type: string
+      description: A description of the error.
+    - name: data
+      type: object
+      description: An object containing the identifiers relevant to the error (entryId, projectId, ...).
+    - name: type
+      type: string
+      description: The type of error. Documented as always the literal string "error".
+  example:
+    logId: 63cb1df0-b82a-459e-accc-635e187f3b8b
+    message: An error occurred requesting the entry
+    data:
+      entryId: ba8a92bd-0e5f-465e-acec-3cdb3db38df6
+      projectId: movieDb
+    type: error
+status_codes:
+  - code: 204
+    meaning: Success with no body. Returned by DELETE operations.
+    envelope: false
+  - code: 400
+    meaning: >-
+      Bad request. At the token endpoint this carries an OAuth error code such as
+      invalid_client rather than the Contensis envelope.
+    envelope: partial
+  - code: 401
+    meaning: >-
+      Unauthorized — missing, expired or insufficiently scoped credential. Applies to both
+      the Delivery access token and the Management bearer token.
+    envelope: true
+  - code: 404
+    meaning: >-
+      Not found. The reference distinguishes the subject in prose but not in the payload —
+      "Project not found" and "Entry not found" are both plain 404s with the same envelope
+      shape, so a client must read `data` to know which identifier failed.
+    envelope: true
+  - code: 500
+    meaning: Internal server error.
+    envelope: true
+findings:
+  - >-
+    No machine-readable discriminator. There is no error code, no `type` URI and no enum —
+    `type` is documented as the constant "error". A client cannot branch on the failure
+    class without string-matching `message`, which is exactly the thing that breaks when
+    the provider rewrites a message.
+  - >-
+    Two different 404s (project vs entry) are indistinguishable except by reading which key
+    is present in `data`.
+  - >-
+    No documented 429. See rate-limits/contensis-rate-limits.yml — Contensis publishes no
+    rate limits and no throttling response, so an agent has nothing to back off against.
+  - >-
+    The error page has not been updated since June 2021 while the API surface has grown
+    through several major versions.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

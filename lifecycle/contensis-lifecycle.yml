@@ -1,0 +1,99 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  Live probes of https://status.zengenti.cloud/ and its Instatus endpoints, the Contensis
+  what's-new landing page, the published API reference at
+  https://www.contensis.com/help-and-docs/apis and its markdown mirror
+  https://github.com/contensis/contensis-docs, and the UK Government G-Cloud Digital
+  Marketplace listings for Contensis (where Zengenti publishes its uptime and support SLA).
+description: >-
+  How Contensis versions, deprecates and reports on its APIs. The operational side is
+  genuinely good — a live status page with a machine-readable feed and a per-component
+  "APIs" indicator. The contract side is thin: no dated API changelog, no deprecation
+  policy, no Sunset or Deprecation headers, and no version negotiation on the wire.
+versioning:
+  scheme: product-version
+  current_product_version: '17.2'
+  in_path: false
+  in_header: false
+  negotiation: none
+  description: >-
+    API paths are unversioned — /api/delivery and /api/management. Capability is tied to
+    the version of the Contensis CMS the tenant is running, and the reference gates
+    features that way in prose ("version 16+ only" for fieldLinkDepths). Historic doc URLs
+    were served under a version segment (.../delivery/http/v/11.3/...). There is no header
+    or endpoint by which a client can ask a tenant which version it is on, so a client
+    cannot feature-detect; it has to be told out of band.
+  evidence:
+    - https://www.contensis.com/help-and-docs/apis/delivery-http/content/entry/list-entries
+    - https://www.contensis.com/help-and-docs/whats-new
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, notice period, or Sunset/Deprecation header support was found
+    anywhere in the API reference. None of the operations in openapi/ carry a `deprecated`
+    flag. The only decay signal available is package currency — see
+    packages/contensis-packages.yml, where the Razor Pages middleware last shipped in 2021
+    against the 15.x line while the current clients are 17.2.0.
+status_page:
+  url: https://status.zengenti.cloud/
+  live: true
+  http_status: 200
+  provider: Instatus
+  machine_readable:
+    - url: https://status.zengenti.cloud/api/v2/summary.json
+      http_status: 200
+      format: json
+    - url: https://status.zengenti.cloud/history.atom
+      http_status: 200
+      format: atom
+  subscriptions: [email, slack, microsoft-teams, google-chat, webhook, rss, atom]
+  components:
+    - London data centre
+    - Manchester data centre
+    - Help desk
+    - Development environments
+    - APIs
+    - GitLab
+    - Blocks
+    - Insytful
+  note: >-
+    An explicit "APIs" component, a webhook subscription option and a JSON summary endpoint
+    together mean an agent or monitor can consume Contensis availability without scraping.
+    Observed all-operational at probe time.
+  dead_alternatives:
+    - url: https://contensis.statuspage.io/
+      finding: >-
+        Resolves 200 but redirects to Atlassian's Statuspage marketing site — not a
+        Contensis status page. Do not cite it.
+    - url: https://status.zengenti.io/
+      finding: DNS does not resolve. Named in third-party search results; do not cite it.
+sla:
+  published: true
+  uptime: 99.9% to 99.99% depending on licence type
+  scope: websites published from Contensis
+  support:
+    critical: 24/7/365
+    other: business hours, tiered by ticket priority
+  source: >-
+    Zengenti's own G-Cloud service definitions on the UK Digital Marketplace
+    (applytosupply.digitalmarketplace.service.gov.uk). The SLA is published to buyers
+    through the government framework rather than on contensis.com.
+  note: >-
+    No SLA is published on the developer documentation, and none is expressed as an API
+    availability figure — the commitment is to published websites.
+changelog:
+  api_changelog: false
+  whats_new: https://www.contensis.com/help-and-docs/whats-new
+  detail: changelog/contensis-changelog.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

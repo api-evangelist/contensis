@@ -1,0 +1,152 @@
+specification: API Commons Webhooks
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://www.contensis.com/help-and-docs/apis/management-http/events/webhook-subscriptions
+  and its topics-and-events reference, plus the webhooks guides under
+  https://www.contensis.com/help-and-docs/guides/integrating-with-other-platforms/webhooks,
+  read through the provider's markdown mirror https://github.com/contensis/contensis-docs.
+docs: https://www.contensis.com/help-and-docs/guides/integrating-with-other-platforms/webhooks/webhooks-overview
+asyncapi_published: false
+asyncapi_note: >-
+  Contensis publishes no AsyncAPI document, no event schema registry and no CloudEvents
+  envelope. The event catalogue below is real and complete as published, but it exists only
+  as an HTML reference table — a consumer has to read it, not import it. Nothing here was
+  generated: no AsyncAPI was authored on the provider's behalf.
+description: >-
+  Contensis ships a full webhook subscription system as part of the Management API. It is
+  the provider's only event surface — there is no streaming API, no message queue and no
+  server-sent events endpoint. Subscriptions are managed through the API and the console,
+  filtered by resource type, event, content type, language and owner, and the payload can be
+  reshaped per resource type with JSON templates.
+management:
+  api: Contensis Management API
+  base: /api/management/projects/{projectId}/subscriptions
+  operations:
+    - List subscriptions
+    - Get a subscription
+    - Update a subscription
+    - Delete a subscription
+  console: Contensis management console — create, update, duplicate, enable/disable, delete
+  cli: contensis list subscriptions (read-only)
+  docs: https://www.contensis.com/help-and-docs/apis/management-http/events/webhook-subscriptions
+subscription_model:
+  fields: [id, name, description, url, enabled, method, topics, headers, templates, version]
+  url_templating: >-
+    The destination URL can be templated with JSON-Pointer-style expressions against the
+    event payload, e.g. https://example.com/handle/{/resource/sys.id}.
+  method: Configurable per subscription; POST in the documented example.
+  filters:
+    - contentTypeId
+    - language
+    - owner
+    - id
+    - dataFormat
+    - workflowState
+    - workflowEvent
+  payload_templates: >-
+    Per-resource-type JSON templates reshape the outgoing body — a general `entry` template
+    plus more specific ones such as `entry.news`. A resource type with no template gets the
+    default webhook request structure.
+channels:
+  - resource_type: entry
+    events: [created, updated, deleted, published, unpublished, archived, unarchived, restored, workflowEventRaised, workflowStateChanged]
+    filters: [contentType, language, project, owner]
+    workflow_events:
+      - contensisEntryApproval.draft.submit
+      - contensisEntryApproval.draft.submitAndApprove
+      - contensisEntryApproval.draft.submitAndScheduledApprove
+      - contensisEntryApproval.awaitingApproval.revoke
+      - contensisEntryApproval.awaitingApproval.decline
+      - contensisEntryApproval.awaitingApproval.approve
+      - contensisEntryApproval.awaitingApproval.scheduledApprove
+      - contensisEntryApproval.declined.submit
+      - contensisEntryApproval.scheduled.cancel
+      - contensisEntryApproval.scheduled.publishNow
+    workflow_states:
+      - contensisEntryApproval.draft
+      - contensisEntryApproval.awaitingApproval
+      - contensisEntryApproval.declined
+      - contensisEntryApproval.scheduled
+      - contensisEntryApproval.versionComplete
+      - contensisEntryApproval.archived
+  - resource_type: asset
+    events: [created, updated, deleted, published, unpublished, archived, unarchived, restored, workflowEventRaised, workflowStateChanged]
+    filters: [contentType, language, project, owner]
+    note: Shares the entry topic schema.
+  - resource_type: form
+    events: [created, updated, deleted, archived, unarchived, restored, workflowEventRaised, workflowStateChanged]
+    filters: [form, language, project]
+    workflow_events:
+      - contensisFormBasic.unread.read
+      - contensisFormBasic.read.unread
+    workflow_states:
+      - contensisFormBasic.unread
+      - contensisFormBasic.read
+      - contensisFormBasic.archived
+  - resource_type: contentType
+    events: [created, updated, deleted]
+  - resource_type: component
+    events: [created, updated, deleted]
+    note: Shares the contentType topic schema.
+  - resource_type: node
+    events: [created, updated, deleted]
+  - resource_type: project
+    events: [updated]
+  - resource_type: user
+    events: [created, updated, deleted]
+delivery:
+  content_type: application/json; charset=utf-8
+  content_type_override: >-
+    Overridable per subscription by setting a content-type header — the docs call out
+    application/xml as a supported case.
+  system_headers: [content-length, content-type]
+  timeout_seconds: 10
+  retries: 9
+  retry_window_hours: 24
+  backoff: exponential
+  retry_note: >-
+    On failure or a request timeout, Contensis immediately retries and then a further nine
+    times over a 24 hour period with exponential backoff.
+  activity_log:
+    fields: [webhook URL, resource, event, date/time, status, response time, attempts]
+    statuses: [200 success, 400 error, In progress]
+    note: >-
+      Per-call request and response detail is viewable in the console, and each retry in a
+      series can be stepped through.
+  testing: >-
+    The docs recommend webhook.site for validating payloads before pointing a subscription
+    at a real endpoint.
+security:
+  signature: none
+  signing_algorithm: null
+  replay_protection: none
+  authentication: >-
+    Custom headers only. Contensis supports standard headers and "secret" headers — a
+    secret header's value is write-once, hidden in the interface afterwards and not
+    returned by the API. The docs position secret headers as the place to put a client id
+    and shared secret.
+  findings:
+    - >-
+      There is no HMAC signature over the payload and no timestamp/nonce, so a receiver
+      cannot verify that a delivered request actually came from Contensis or that it has
+      not been replayed. The published mitigation is a shared secret in a header, which is
+      a bearer credential, not a signature.
+    - >-
+      Combined with the 10-second timeout and nine retries, a consumer must be idempotent
+      on its own side — Contensis sends no delivery id or event id in the documented
+      envelope to deduplicate against.
+findings:
+  - >-
+    The event catalogue is genuinely broad — eight resource types, workflow state and
+    workflow event granularity, per-language and per-content-type filtering. This is more
+    than most headless CMS webhook systems expose.
+  - >-
+    None of it is machine-readable. No AsyncAPI, no JSON Schema for the payloads, no event
+    registry endpoint. An integrator hand-transcribes the table.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

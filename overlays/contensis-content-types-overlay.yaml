@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Contensis Content Types API
+  version: 1.0.0
+  description: OpenAPI Overlay capturing what API Evangelist added on top of contensis-content-types-api-openapi.yml.
+    Every action is additive metadata — provenance, the real multi-tenant host pattern, the authentication
+    the source document omits, and links to the runtime-semantics artifacts in this repository. Nothing
+    here changes an operation, a schema or a response. The source OpenAPI is never mutated.
+extends: contensis-content-types-api-openapi.yml
+x-generated: '2026-09-06'
+x-method: generated
+x-source: Generated from openapi/contensis-content-types-api-openapi.yml in this repository, plus the
+  Contensis public documentation at https://www.contensis.com/help-and-docs/apis.
+x-target-version: 1.0.0
+actions:
+- target: $.info
+  description: Record where this description came from and what it does not cover.
+  update:
+    x-apis-io-provenance:
+      enriched-by: API Evangelist enrichment pipeline
+      enriched: '2026-09-06'
+      source-documentation: https://www.contensis.com/help-and-docs/apis/delivery-http
+      source-markdown-mirror: https://github.com/contensis/contensis-docs
+      provider-published-openapi: false
+      note: Contensis publishes no OpenAPI. This document describes a slice of the read-only Delivery
+        API transcribed from the provider's own reference. It is not a provider artifact and must not
+        be presented as one.
+- target: $.info
+  description: Point at the runtime semantics the specification does not carry.
+  update:
+    x-conventions: conventions/contensis-conventions.yml
+    x-authentication: authentication/contensis-authentication.yml
+    x-errors: errors/contensis-problem-types.yml
+    x-rate-limits: rate-limits/contensis-rate-limits.yml
+    x-lifecycle: lifecycle/contensis-lifecycle.yml
+    x-data-model: data-model/contensis-data-model.yml
+- target: $.servers[0]
+  description: Explain the templated host. Contensis has no shared API host — the server variable is the
+    customer's own environment.
+  update:
+    x-host-pattern: https://cms-{alias}.cloud.contensis.com
+    x-staging-host-pattern: https://staging-{alias}.cloud.contensis.com
+    x-host-evidence: https://github.com/contensis/cli/blob/main/packages/contensis-cli/README.md
+    x-multi-tenant: true
+- target: $.info
+  description: State the authentication the source specification omits entirely.
+  update:
+    x-authentication-summary:
+      scheme: apiKey
+      in: header
+      name: Authorization
+      alternative: accessToken query parameter (documented, but leaks the credential into logs)
+      scoped: false
+      expiry: none documented
+      docs: https://www.contensis.com/help-and-docs/apis/delivery-http/security/authentication
+      note: Not added as a securityScheme because the pipeline does not mutate the source document; recorded
+        here so a consumer of the overlay knows.
+- target: $.paths['/api/delivery/projects/{projectId}/contenttypes'].get
+  description: Mark the operation read-only and safe for an agent to call.
+  update:
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: optional
+      reversibility: na
+      idempotent: true
+- target: $.paths['/api/delivery/projects/{projectId}/contenttypes/{contentTypeId}'].get
+  description: Mark the operation read-only and safe for an agent to call.
+  update:
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: optional
+      reversibility: na
+      idempotent: true

@@ -1,0 +1,114 @@
+specification: API Commons Authentication
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://www.contensis.com/help-and-docs/apis/delivery-http/security/authentication and
+  https://www.contensis.com/help-and-docs/apis/management-http/security/authentication,
+  cross-read against the markdown mirror the provider publishes at
+  https://github.com/contensis/contensis-docs.
+docs:
+  - https://www.contensis.com/help-and-docs/apis/delivery-http/security/authentication
+  - https://www.contensis.com/help-and-docs/apis/management-http/security/authentication
+  - https://www.contensis.com/help-and-docs/apis/management-http/security/scopes
+  - https://www.contensis.com/help-and-docs/guides/managing-your-environment/environment-access-token
+description: >-
+  Contensis runs two different authentication models across its two HTTP APIs, and the gap
+  between them matters. The read-only Delivery API takes a single long-lived,
+  environment-wide access token with no scoping and no expiry documented. The Management
+  API runs OAuth 2.0 client credentials against a per-tenant authorization server, with
+  named scopes and one-hour bearer tokens. The captured OpenAPI declares no
+  securitySchemes at all, so everything here is read from the docs, not derived.
+schemes:
+  - id: delivery-access-token
+    api: Contensis Delivery API
+    type: apiKey
+    in: header
+    name: Authorization
+    scheme_note: >-
+      The token is sent as the raw Authorization header value — there is no Bearer prefix
+      in the documented example.
+    alternative:
+      in: query
+      name: accessToken
+      note: >-
+        The same token may be passed as an `accessToken` query parameter. That is a real
+        published option and a real risk surface: the credential lands in access logs,
+        referrer headers and browser history.
+    scoped: false
+    expiry: none documented
+    rotation: >-
+      Issued and viewed by a System Administrator from the environment settings screen.
+      No programmatic rotation endpoint is documented.
+    granularity: >-
+      Environment-wide. One token authorises read access to every project in that
+      environment — there is no per-project or per-content-type read credential.
+    example_request: |
+      GET /api/delivery/projects/movieDb/entries/{entryId}
+      Authorization: your-access-token-here
+  - id: management-oauth2-client-credentials
+    api: Contensis Management API
+    type: oauth2
+    flow: clientCredentials
+    token_endpoint: https://cms-{alias}.cloud.contensis.com/authenticate/connect/token
+    token_endpoint_note: >-
+      Per-tenant. The docs render it as https://cms-yourcontensis.com/authenticate/connect/token;
+      the real cloud host pattern is cms-{alias}.cloud.contensis.com, as used in Contensis'
+      own CLI documentation.
+    content_type: application/x-www-form-urlencoded
+    parameters:
+      - grant_type=client_credentials
+      - client_id
+      - client_secret
+      - scope
+    credential_source: >-
+      client_id and client_secret ("shared secret") are created in the API Management
+      screen of the Contensis management console.
+    token_type: Bearer
+    token_lifetime_seconds: 3600
+    lifetime_note: Returned as `expires_in`; the documented example value is 3600.
+    refresh: >-
+      No refresh token is documented. The guidance is to cache the access token locally and
+      re-request when it expires.
+    presentation: HTTP Authorization header on each Management API request.
+    failures:
+      - status: 400
+        error: invalid_client
+        meaning: Bad client_id / client_secret pair at the token endpoint.
+      - status: 401
+        meaning: Missing, expired or insufficiently scoped token on a Management API call.
+    scopes_artifact: scopes/contensis-scopes.yml
+  - id: cli-credentials
+    api: Contensis CLI
+    type: passthrough
+    note: >-
+      The first-party CLI accepts either a user/password pair or the same client-id /
+      shared-secret pair as the Management API, supplied per command or cached per
+      environment. It is not a third scheme, it is a client for the two above.
+mtls: not documented
+openid_connect:
+  discovery: not served
+  note: >-
+    The token path (/authenticate/connect/token) is IdentityServer-shaped, which normally
+    implies a sibling /.well-known/openid-configuration on the tenant host. Contensis does
+    not advertise one from its public domain, and the tenant host is per-customer, so no
+    anonymous discovery document was reachable to probe — see
+    well-known/contensis-well-known.yml.
+findings:
+  - >-
+    The Delivery API credential is unscoped and environment-wide, with no documented
+    expiry. Anything holding it can read every project in that environment for as long as
+    the token exists. For an agent integration that is the whole read surface behind one
+    unrotatable string.
+  - >-
+    Passing the Delivery token as a query parameter is documented as a first-class option.
+    That is the kind of thing an agent will do because it is the easiest path, and it
+    leaks the credential into logs.
+  - >-
+    Management API scopes exist but are few — the published table covers projects and
+    entries only. See scopes/contensis-scopes.yml.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

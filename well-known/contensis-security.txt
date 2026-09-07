@@ -1,0 +1,5 @@
+﻿Contact: mailto:security@contensis.com
+Preferred-Languages: en
+Policy: https://www.contensis.com/security
+Canonical: https://www.contensis.com/security
+Expires: 2026-12-31T23:59:00.000Z

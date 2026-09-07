@@ -1,0 +1,237 @@
+specification: API Commons Packages
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  npm registry metadata (registry.npmjs.org), the NuGet v3 registration index
+  (api.nuget.org), the Chocolatey community feed, and the provider's own GitHub
+  organisation (https://github.com/contensis). Every package below is published by
+  Contensis / Zengenti Ltd and links back to a repository in that org, so all are
+  first-party. Versions and dates are read from registry metadata, not from prose.
+description: >-
+  First-party client libraries and tooling for the Contensis Delivery, Management and
+  Image APIs. Contensis ships two complete language stacks — JavaScript/TypeScript on npm
+  and .NET on NuGet — plus a React framework, a Canvas rendering family, a forms renderer,
+  a personalisation engine, an importer and a CLI. The .NET clients track the CMS product
+  version (17.2.0), which makes them the clearest currency signal in this record.
+tags:
+  - SDK
+  - Client Library
+  - Headless CMS
+  - npm
+  - NuGet
+packages:
+  # ---- Core API clients ----
+  - name: contensis-delivery-api
+    registry: npm
+    official: true
+    language: JavaScript/TypeScript
+    version: 1.6.2
+    published: '2026-02-10'
+    url: https://www.npmjs.com/package/contensis-delivery-api
+    repository: https://github.com/contensis/contensis-delivery-api
+    api: Contensis Delivery API
+    description: Client for retrieving content using the read-only Contensis Delivery API.
+  - name: contensis-management-api
+    registry: npm
+    official: true
+    language: JavaScript/TypeScript
+    version: 2.4.0
+    published: '2025-06-10'
+    url: https://www.npmjs.com/package/contensis-management-api
+    repository: https://github.com/contensis/contensis-management-api
+    api: Contensis Management API
+    description: Client for managing content using the Contensis Management API.
+  - name: contensis-core-api
+    registry: npm
+    official: true
+    language: JavaScript/TypeScript
+    version: 1.2.2
+    published: '2026-02-10'
+    url: https://www.npmjs.com/package/contensis-core-api
+    repository: https://github.com/contensis/contensis-core-api
+    description: >-
+      Shared dependency library used by contensis-delivery-api and contensis-management-api.
+  - name: Zengenti.Contensis.Delivery
+    registry: nuget
+    official: true
+    language: .NET
+    version: 17.2.0
+    published: '2026-03-31'
+    url: https://www.nuget.org/packages/Zengenti.Contensis.Delivery
+    api: Contensis Delivery API
+    description: >-
+      .NET client library for retrieving content from the Contensis Delivery API. Version
+      tracks the Contensis CMS product release line (17.2).
+  - name: Zengenti.Contensis.Management
+    registry: nuget
+    official: true
+    language: .NET
+    version: 17.2.0
+    published: '2026-03-31'
+    url: https://www.nuget.org/packages/Zengenti.Contensis.Management
+    api: Contensis Management API
+    description: >-
+      .NET client library for creating and managing content through the Contensis
+      Management API.
+  - name: Zengenti.Contensis.Delivery.RazorPages.NodeRouteHandling
+    registry: nuget
+    official: true
+    language: .NET
+    version: 15.1.0
+    published: '2021-09-29'
+    url: https://www.nuget.org/packages/Zengenti.Contensis.Delivery.RazorPages.NodeRouteHandling
+    description: >-
+      ASP.NET Razor Pages node route-handling middleware. Last published 2021 and pinned to
+      the 15.x CMS line — five product majors behind the 17.2 clients above; treat as
+      legacy rather than current.
+  # ---- Frameworks and tooling ----
+  - name: '@zengenti/contensis-react-base'
+    registry: npm
+    official: true
+    language: JavaScript/TypeScript
+    version: 4.0.0
+    published: '2026-04-22'
+    url: https://www.npmjs.com/package/@zengenti/contensis-react-base
+    description: >-
+      React foundation for Contensis sites — routing, SSR, state and Delivery API wiring.
+      v4 announced at https://www.contensis.com/community/blog/introducing-contensis-react-base-4
+  - name: contensis-cli
+    registry: npm
+    official: true
+    language: JavaScript/TypeScript
+    version: 1.6.0
+    published: '2025-12-11'
+    url: https://www.npmjs.com/package/contensis-cli
+    repository: https://github.com/contensis/cli
+    description: >-
+      Contensis command line interface and interactive shell. Also distributed via Homebrew
+      (contensis/cli tap), Chocolatey and GHCR container images — see cli/contensis-cli.yml.
+  - name: contensis-cli
+    registry: chocolatey
+    official: true
+    language: Binary (Windows)
+    version: 1.6.0
+    published: '2025-12-11'
+    url: https://community.chocolatey.org/packages/contensis-cli
+    description: Windows binary distribution of the Contensis CLI.
+  - name: contensis-importer
+    registry: npm
+    official: true
+    language: JavaScript/TypeScript
+    version: 1.0.0-beta.8
+    published: '2025-11-03'
+    url: https://www.npmjs.com/package/contensis-importer
+    description: >-
+      Bulk load or maintain Contensis content from TypeScript/JavaScript. Still on a beta
+      pre-release tag after ten months.
+  - name: contensis-zod
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.1.1
+    published: '2025-07-10'
+    url: https://www.npmjs.com/package/contensis-zod
+    description: Generates Zod schemas from Contensis content types.
+  # ---- Canvas / content rendering ----
+  - name: '@contensis/canvas-react'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.3.2
+    published: '2026-02-12'
+    url: https://www.npmjs.com/package/@contensis/canvas-react
+    description: Render Contensis Canvas content with React.
+  - name: '@contensis/canvas-html'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.3.0
+    published: '2025-09-09'
+    url: https://www.npmjs.com/package/@contensis/canvas-html
+    description: Render Canvas content to HTML.
+  - name: '@contensis/canvas-markdown'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 0.0.2
+    published: '2025-07-10'
+    url: https://www.npmjs.com/package/@contensis/canvas-markdown
+    description: >-
+      Render Canvas content to Markdown — the path that matters for feeding Contensis
+      content to LLMs. Still at 0.0.2.
+  - name: '@contensis/html-canvas'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.2.0
+    published: '2025-09-09'
+    url: https://www.npmjs.com/package/@contensis/html-canvas
+    description: Convert HTML into the Contensis Canvas document model.
+  # ---- Product-specific ----
+  - name: '@contensis/forms'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.0.5
+    published: '2026-04-29'
+    url: https://www.npmjs.com/package/@contensis/forms
+    repository: https://github.com/contensis/contensis-forms
+    description: Render Contensis Forms with React.
+  - name: '@contensis/experience-engine'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.0.0-beta.2
+    published: '2026-08-26'
+    url: https://www.npmjs.com/package/@contensis/experience-engine
+    repository: https://github.com/contensis/experience-engine
+    description: Personalisation engine for Contensis. Beta.
+  - name: '@contensis/experience-engine-react'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 1.0.0-beta.0
+    published: '2026-07-03'
+    url: https://www.npmjs.com/package/@contensis/experience-engine-react
+    description: React bindings for the Contensis personalisation engine. Beta.
+  - name: insytful-ai-search-components
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 3.2.0
+    published: '2026-08-17'
+    url: https://www.npmjs.com/package/insytful-ai-search-components
+    repository: https://github.com/contensis/insytful-ai-search-components
+    description: >-
+      Accessible AI-powered search and chat modal component library, published from the
+      Contensis GitHub organisation.
+  - name: '@contensis/contensis-for-councils'
+    registry: npm
+    official: true
+    language: TypeScript
+    version: 2.4.1-beta.2
+    published: '2026-07-15'
+    url: https://www.npmjs.com/package/@contensis/contensis-for-councils
+    description: >-
+      Single React codebase powering multiple UK council websites on Contensis.
+absent:
+  - registry: pypi
+    note: No first-party Contensis package found on PyPI.
+  - registry: maven
+    note: No first-party Contensis artifact found on Maven Central.
+  - registry: rubygems
+    note: >-
+      No client library. The only Ruby surface is the Homebrew formula repo
+      github.com/contensis/homebrew-cli, which is a tap, not a gem.
+  - registry: crates.io
+    note: No first-party Contensis crate.
+  - registry: pkg.go.dev
+    note: No first-party Contensis Go module.
+  - registry: packagist
+    note: No first-party Contensis PHP package.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,94 @@
+specification: API Commons Agent Skills
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://github.com/contensis/he-content-skills — a public repository in the Contensis
+  GitHub organisation, authored and maintained by Richard Saunders (r.saunders@zengenti.com),
+  Zengenti Ltd being the company that builds Contensis. Every SKILL.md below is saved
+  verbatim from that repository's main branch; nothing here was written by API Evangelist.
+description: >-
+  Contensis publishes Agent Skills. They are not skills for calling the Contensis APIs —
+  they are content-practice skills aimed at Contensis' largest customer segment, UK higher
+  education web teams, and they follow the Agent Skills standard (a folder with a SKILL.md
+  carrying name/description frontmatter and a plain-markdown spec). They ship as a Claude
+  Code plugin with a marketplace manifest, and each skill also carries an OpenAI agent
+  YAML, so they run in more than one runtime. This is a rarer posture than an MCP server:
+  the provider is publishing agent instructions rather than agent endpoints.
+repository: https://github.com/contensis/he-content-skills
+plugin:
+  name: he-content-skills
+  version: 0.1.0
+  license: MIT
+  marketplace: he-content
+  author: Richard Saunders <r.saunders@zengenti.com>
+  install: https://github.com/contensis/he-content-skills/blob/main/install.sh
+  listing: https://skills.sh/contensis/he-content-skills
+standard: https://agentskills.io
+skills:
+  - name: alt-text
+    file: he-content-skills/contensis-alt-text.md
+    description: >-
+      Write alt text for new images, or audit existing alt text against WCAG 2.2 AA —
+      single images, image lists, page URLs, or pasted markup. Two modes, inferred from
+      the input.
+    method: searched
+    source: https://github.com/contensis/he-content-skills/blob/main/skills/alt-text/SKILL.md
+  - name: geo-audit
+    file: he-content-skills/contensis-geo-audit.md
+    description: >-
+      Audit a page against five GEO (Generative Engine Optimization) dimensions — whether
+      ChatGPT Search, Perplexity, Google AI Overviews and Bing Copilot can understand,
+      cite and surface it. Produces ratings, quick wins and an example rewrite.
+    method: searched
+    source: https://github.com/contensis/he-content-skills/blob/main/skills/geo-audit/SKILL.md
+  - name: meta-descriptions
+    file: he-content-skills/contensis-meta-descriptions.md
+    description: >-
+      Write, rewrite or review SERP meta descriptions for course, research, news and
+      policy pages, enforcing length limits with real character counts.
+    method: searched
+    source: https://github.com/contensis/he-content-skills/blob/main/skills/meta-descriptions/SKILL.md
+  - name: refine-for-web
+    file: he-content-skills/contensis-refine-for-web.md
+    description: >-
+      Turn raw submitted copy — Word documents, emails, pasted departmental text — into
+      structured, web-ready course page content. Preserves entry requirements and fees
+      verbatim and tags claims needing verification.
+    method: searched
+    source: https://github.com/contensis/he-content-skills/blob/main/skills/refine-for-web/SKILL.md
+  - name: staleness-audit
+    file: he-content-skills/contensis-staleness-audit.md
+    description: >-
+      Scan page content and flag claims that may be out of date — fees, entry
+      requirements, staff names, statistics, deadlines — anchored to today's date and the
+      current academic year, with a risk rating per flag.
+    method: searched
+    source: https://github.com/contensis/he-content-skills/blob/main/skills/staleness-audit/SKILL.md
+agents:
+  note: >-
+    Claude Code subagents, not portable skill specs — they depend on the Agent tool to fan
+    work out in parallel. Saved verbatim for completeness.
+  items:
+    - name: geo-audit-page
+      file: he-content-skills/contensis-agent-geo-audit-page.md
+    - name: geo-audit-batch
+      file: he-content-skills/contensis-agent-geo-audit-batch.md
+    - name: staleness-audit-page
+      file: he-content-skills/contensis-agent-staleness-audit-page.md
+    - name: staleness-audit-batch
+      file: he-content-skills/contensis-agent-staleness-audit-batch.md
+readme: he-content-skills/contensis-he-content-skills-README.md
+gaps:
+  - >-
+    No skill grounds an agent in the Contensis Delivery or Management API. There is no
+    published skill for fetching an entry, creating one, or driving the publish workflow —
+    the flows an agent integrating with Contensis would actually need.
+  - >-
+    API Evangelist did not author replacement API skills for this pass. The captured
+    OpenAPI carries no operationIds, and this pipeline does not invent them.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

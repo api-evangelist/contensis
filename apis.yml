@@ -38,8 +38,13 @@ tags:
   - CMS
   - Content
   - Headless CMS
+  - Content Management
+  - Digital Experience Platform
+  - Content Delivery
+  - Webhooks
+  - Higher Education
 created: '2024-11-13'
-modified: '2026-04-28'
+modified: '2026-09-06'
 specificationVersion: '0.23'
 apis:
 - aid: contensis:delivery-api
@@ -50,12 +55,27 @@ apis:
   - REST
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  baseURL: https://cms-{alias}.cloud.contensis.com
   properties:
+  - type: APIReference
+    url: https://www.contensis.com/help-and-docs/developers/api-reference
+  - type: Authentication
+    url: https://www.contensis.com/help-and-docs/apis/delivery-http/security/authentication
+  - type: SDKs
+    url: packages/contensis-packages.yml
+  - type: Conventions
+    url: conventions/contensis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/contensis-problem-types.yml
+  - type: DataModel
+    url: data-model/contensis-data-model.yml
+  - type: X-MCPServerCandidate
+    url: mcp/contensis-mcp.yml
   - url: https://www.contensis.com/help-and-docs/apis/delivery-http
     type: Documentation
   - url: https://www.contensis.com/help-and-docs/apis/delivery-js
     type: JavaScript
-  - url: https://www.contensis.com/help-and-docs/apis/delivery-net
+  - url: https://www.contensis.com/help-and-docs/apis/delivery-dotnet
     type: .Net
   description: >-
     The Contensis Delivery API focuses on delivering content created in content types and entries to websites
@@ -70,12 +90,27 @@ apis:
   - REST
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/management-http
+  baseURL: https://cms-{alias}.cloud.contensis.com
   properties:
+  - type: APIReference
+    url: https://www.contensis.com/help-and-docs/developers/api-reference
+  - type: Authentication
+    url: authentication/contensis-authentication.yml
+  - type: OAuthScopes
+    url: scopes/contensis-scopes.yml
+  - type: Webhooks
+    url: asyncapi/contensis-webhooks.yml
+  - type: Conventions
+    url: conventions/contensis-conventions.yml
+  - type: ErrorCatalog
+    url: errors/contensis-problem-types.yml
+  - type: DataModel
+    url: data-model/contensis-data-model.yml
   - url: https://www.contensis.com/help-and-docs/apis/management-http
     type: Documentation
   - url: https://www.contensis.com/help-and-docs/apis/management-js
     type: JavaScript
-  - url: https://www.contensis.com/help-and-docs/apis/management-net
+  - url: https://www.contensis.com/help-and-docs/apis/management-dotnet
     type: .Net
   description: >-
     The Contensis Management API allows developers to import and manage content within content types and
@@ -95,6 +130,7 @@ apis:
   - Transformation
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/image-api
+  baseURL: https://cms-{alias}.cloud.contensis.com
   properties:
   - url: https://www.contensis.com/help-and-docs/apis/image-api
     type: Documentation
@@ -108,39 +144,55 @@ apis:
 - aid: contensis:contensis-content-types-api
   name: Contensis Content Types API
   description: The Content Types API from Contensis — 2 operation(s) for content types.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  baseURL: https://cms-{alias}.cloud.contensis.com
   tags:
   - Content Types
   properties:
+  - type: Overlay
+    url: overlays/contensis-content-types-overlay.yaml
   - type: OpenAPI
     url: openapi/contensis-content-types-api-openapi.yml
 - aid: contensis:contensis-entries-api
   name: Contensis Entries API
   description: The Entries API from Contensis — 3 operation(s) for entries.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  baseURL: https://cms-{alias}.cloud.contensis.com
   tags:
   - Entries
   properties:
+  - type: Overlay
+    url: overlays/contensis-entries-overlay.yaml
   - type: OpenAPI
     url: openapi/contensis-entries-api-openapi.yml
 - aid: contensis:contensis-projects-api
   name: Contensis Projects API
   description: The Projects API from Contensis — 1 operation(s) for projects.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  baseURL: https://cms-{alias}.cloud.contensis.com
   tags:
   - Project
   tags_raw:
   - Projects
   properties:
+  - type: Overlay
+    url: overlays/contensis-projects-overlay.yaml
   - type: OpenAPI
     url: openapi/contensis-projects-api-openapi.yml
 - aid: contensis:contensis-taxonomy-api
   name: Contensis Taxonomy API
   description: The Taxonomy API from Contensis — 1 operation(s) for taxonomy.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.contensis.com/help-and-docs/apis/delivery-http
+  baseURL: https://cms-{alias}.cloud.contensis.com
   tags:
   - Taxonomy
   properties:
+  - type: Overlay
+    url: overlays/contensis-taxonomy-overlay.yaml
   - type: OpenAPI
     url: openapi/contensis-taxonomy-api-openapi.yml
 common:
@@ -166,7 +218,77 @@ common:
     url: https://www.contensis.com/community
   - type: Support
     url: https://www.contensis.com/help-and-docs
+  - type: Packages
+    url: packages/contensis-packages.yml
+  - type: SDKs
+    url: packages/contensis-packages.yml
+  - type: CLI
+    url: cli/contensis-cli.yml
+  - type: Components
+    url: components/contensis-components.yml
+  - type: WellKnown
+    url: well-known/contensis-well-known.yml
+  - type: SecurityTxt
+    url: well-known/contensis-security.txt
+  - type: Security
+    url: security/contensis-vulnerability-disclosure.yml
+  - type: Compliance
+    url: conformance/contensis-conformance.yml
+  - type: Conformance
+    url: conformance/contensis-conformance.yml
+  - type: Authentication
+    url: authentication/contensis-authentication.yml
+  - type: OAuthScopes
+    url: scopes/contensis-scopes.yml
+  - type: ErrorCatalog
+    url: errors/contensis-problem-types.yml
+  - type: Conventions
+    url: conventions/contensis-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/contensis-lifecycle.yml
+  - type: StatusPage
+    url: https://status.zengenti.cloud/
+  - type: ChangeLog
+    url: changelog/contensis-changelog.yml
+  - type: DataModel
+    url: data-model/contensis-data-model.yml
+  - type: Webhooks
+    url: asyncapi/contensis-webhooks.yml
+  - type: X-MCPServerCandidate
+    url: mcp/contensis-mcp.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/contensis-llms.txt
+  - type: Plans
+    url: plans/contensis-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/contensis-rate-limits.yml
+  - type: DeveloperPortal
+    url: https://www.contensis.com/help-and-docs/developers
+  - type: APIReference
+    url: https://www.contensis.com/help-and-docs/developers/api-reference
+  - type: GettingStarted
+    url: https://www.contensis.com/help-and-docs/guides/getting-started
+  - type: Pricing
+    url: https://www.contensis.com/pricing
+  - type: SignUp
+    url: https://www.contensis.com/contact-us/request-demo
+  - type: Login
+    url: https://www.contensis.com/account/login
+  - type: TermsOfService
+    url: https://www.contensis.com/terms-of-use
+  - type: PrivacyPolicy
+    url: https://www.contensis.com/privacy-and-cookies
+  - type: HelpCenter
+    url: https://www.contensis.com/support
 
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 31
+  pass: local-v3

@@ -1,0 +1,189 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  The Contensis HTTP API reference (https://www.contensis.com/help-and-docs/apis) and its
+  markdown mirror https://github.com/contensis/contensis-docs, the Contensis security page
+  https://www.contensis.com/security, a live fetch of
+  https://www.contensis.com/.well-known/security.txt, and the OpenAPI documents in
+  openapi/ in this repo.
+description: >-
+  What Contensis actually conforms to, asserted against evidence rather than marketing
+  copy. The picture is: real OAuth 2.0, real RFC 9116, real ISO certification — and no
+  adoption of any of the modern HTTP interoperability RFCs (problem details, rate-limit
+  headers, sunset headers, idempotency).
+conformance:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749) client credentials
+    conforms: true
+    evidence: >-
+      https://www.contensis.com/help-and-docs/apis/management-http/security/authentication —
+      documented client_credentials grant against
+      /authenticate/connect/token, form-encoded, returning a Bearer token with expires_in
+      and a scope parameter. Failures return the standard invalid_client error.
+    note: Applies to the Management API only. The Delivery API uses a static token.
+  - id: oauth2-scopes
+    name: OAuth 2.0 scopes
+    conforms: true
+    evidence: https://www.contensis.com/help-and-docs/apis/management-http/security/scopes
+    note: >-
+      Four scopes published, covering projects and entries. Most of the Management API
+      surface is not represented in the table — see scopes/contensis-scopes.yml.
+  - id: oidc
+    name: OpenID Connect Discovery
+    conforms: false
+    evidence: >-
+      The token path (/authenticate/connect/token) is IdentityServer-shaped, but no
+      /.well-known/openid-configuration is served on any public Contensis host — probed
+      404 on www.contensis.com and contensis.com, see well-known/contensis-well-known.yml.
+      The tenant host is per-customer and not anonymously probeable.
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      https://www.contensis.com/help-and-docs/apis/management-http/key-concepts/errors —
+      the published envelope is {logId, message, data, type} served as application/json.
+      No type URI, no title, no status, no instance, no application/problem+json.
+  - id: rfc9116
+    name: RFC 9116 security.txt
+    conforms: true
+    evidence: >-
+      https://www.contensis.com/.well-known/security.txt returned HTTP 200 text/plain with
+      Contact, Preferred-Languages, Policy, Canonical and Expires (2026-12-31). Saved
+      verbatim at well-known/contensis-security.txt.
+  - id: rfc8594
+    name: RFC 8594 Sunset header / deprecation signalling
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation header, and no deprecation policy, appears anywhere in the
+      published API reference. See lifecycle/contensis-lifecycle.yml.
+  - id: ratelimit-headers
+    name: IETF RateLimit header fields
+    conforms: false
+    evidence: >-
+      No rate-limit headers, no documented limits and no documented 429 response. See
+      rate-limits/contensis-rate-limits.yml.
+  - id: idempotency
+    name: Idempotency key on unsafe requests
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header or equivalent replay protection is documented for any
+      Management API write. See conventions/contensis-conventions.yml.
+  - id: pagination
+    name: Consistent pagination across collection endpoints
+    conforms: true
+    evidence: >-
+      https://www.contensis.com/help-and-docs/apis/management-http/content/paging/paged-list —
+      a single PagedList envelope (pageIndex, pageSize, totalCount, pageCount, items) with
+      pageIndex/pageSize query parameters used consistently across both APIs.
+    note: Offset paging. No cursor option.
+  - id: json:api
+    name: JSON:API
+    conforms: false
+    evidence: >-
+      Contensis serves a proprietary JSON envelope with a `sys` metadata block; it does not
+      implement the JSON:API document structure.
+  - id: openapi
+    name: OpenAPI description of the API
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document is published by Contensis. Probed 404 on
+      https://www.contensis.com/openapi.json and https://www.contensis.com/swagger.json,
+      and the API reference at https://www.contensis.com/help-and-docs/developers/api-reference
+      links no specification file. The documents in openapi/ in this repo describe only a
+      seven-operation slice of the Delivery API and are not provider-published.
+  - id: graphql
+    name: GraphQL
+    conforms: false
+    evidence: >-
+      No GraphQL surface found. https://www.contensis.com/help-and-docs/apis/delivery-http/graphql
+      returned 404 and the API reference names only HTTP, JavaScript and .NET interfaces.
+  - id: asyncapi
+    name: AsyncAPI description of the event surface
+    conforms: false
+    evidence: >-
+      A full webhook event catalogue is published as an HTML table, with no AsyncAPI
+      document and no payload schemas. See asyncapi/contensis-webhooks.yml.
+  - id: webhook-signing
+    name: Signed webhook payloads
+    conforms: false
+    evidence: >-
+      https://www.contensis.com/help-and-docs/guides/integrating-with-other-platforms/webhooks/webhook-custom-headers —
+      the only authentication mechanism offered to a receiver is a user-defined secret
+      header. No HMAC signature, no timestamp, no replay protection.
+  - id: agent-skills
+    name: Agent Skills standard (agentskills.io)
+    conforms: true
+    evidence: >-
+      https://github.com/contensis/he-content-skills — five SKILL.md files with
+      name/description frontmatter plus a Claude Code plugin manifest and per-skill OpenAI
+      agent YAML. Saved verbatim under skills/. See skills/_index.yml.
+    note: >-
+      The skills teach content practice for higher-education websites; none of them ground
+      an agent in the Contensis API itself.
+  - id: mcp
+    name: Model Context Protocol server
+    conforms: false
+    evidence: >-
+      No first-party MCP server found in the Contensis GitHub organisation, on npm, or in
+      the documentation. See mcp/contensis-mcp.yml.
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json both returned 404 on
+      www.contensis.com.
+compliance:
+  certifications:
+    - name: ISO/IEC 27001:2022
+      status: certified
+      subject: Zengenti Ltd (the company behind Contensis)
+      evidence: >-
+        https://www.contensis.com/security — "Zengenti, the company behind Contensis, is
+        certified to ISO/IEC 27001", and the site-wide footer statement "Zengenti Ltd is an
+        ISO 9001:2015 and ISO 27001:2022 registered company".
+    - name: ISO 9001:2015
+      status: certified
+      subject: Zengenti Ltd
+      evidence: >-
+        Site-wide footer on contensis.com — "Zengenti Ltd is an ISO 9001:2015 and ISO
+        27001:2022 registered company".
+  programs:
+    - name: Responsible vulnerability disclosure policy
+      evidence: >-
+        https://www.contensis.com/security is a full disclosure policy — reporting
+        procedure, expected timelines and researcher guidelines — and is named as both
+        Policy and Canonical in the served security.txt.
+  procurement:
+    - name: UK Government G-Cloud (Digital Marketplace)
+      evidence: >-
+        Multiple Contensis service definitions are listed on
+        applytosupply.digitalmarketplace.service.gov.uk, including NHS and emergency
+        services packages, where Zengenti publishes its uptime and support SLA.
+      note: >-
+        A procurement framework listing, not a certification. Recorded because it is where
+        Contensis publishes commitments it does not publish on its own site.
+  not_found:
+    - SOC 2
+    - PCI DSS
+    - HIPAA
+    - FedRAMP
+    - Cyber Essentials
+  note: >-
+    None of the above were found on the security page or elsewhere on contensis.com. Absence
+    of evidence, not evidence of absence — but nothing was published to cite.
+domain_standard:
+  applicable: false
+  note: >-
+    Contensis competes in headless CMS / DXP, a market with no adopted machine-readable
+    interoperability standard for content contracts — there is no CMS equivalent of SCIM,
+    FHIR or OpenRTB to conform to. The nearest adjacent standards that do exist (OAI-PMH
+    for repositories, Ed-Fi/OneRoster for education data) address different problems and
+    Contensis does not claim them. Recorded as not-applicable rather than as a failure;
+    this dimension is reward-only and nothing was invented to fill it.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

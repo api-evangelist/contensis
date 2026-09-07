@@ -1,0 +1,116 @@
+specification: API Commons Components
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  The Contensis GitHub organisation (https://github.com/contensis) and the matching npm
+  registry entries. Every family below is published by Contensis / Zengenti Ltd.
+description: >-
+  Client-side and embeddable surfaces Contensis ships alongside its APIs. These are
+  distinct from the API clients in packages/contensis-packages.yml — they render content,
+  they do not call endpoints on your behalf. Three families: Canvas renderers (the
+  Contensis structured-content document model), Forms, and personalisation/search UI.
+families:
+  - name: Canvas renderers
+    description: >-
+      Canvas is the Contensis structured content document model — the successor to
+      Composer. These libraries turn a Canvas document into React, HTML or Markdown, and
+      convert HTML back into Canvas.
+    repository: https://github.com/contensis/canvas
+    schema_repository: https://github.com/contensis/canvas-schema
+    docs: https://www.contensis.com/help-and-docs/guides/authoring-and-managing-content/canvas-editor
+    components:
+      - name: '@contensis/canvas-react'
+        kind: react-renderer
+        version: 1.3.2
+        published: '2026-02-12'
+        url: https://www.npmjs.com/package/@contensis/canvas-react
+      - name: '@contensis/canvas-html'
+        kind: html-renderer
+        version: 1.3.0
+        published: '2025-09-09'
+        url: https://www.npmjs.com/package/@contensis/canvas-html
+      - name: '@contensis/canvas-markdown'
+        kind: markdown-renderer
+        version: 0.0.2
+        published: '2025-07-10'
+        url: https://www.npmjs.com/package/@contensis/canvas-markdown
+        note: >-
+          The agent-relevant one — it is how Contensis content becomes LLM-readable text.
+          Still at 0.0.2 as of this pass.
+      - name: '@contensis/html-canvas'
+        kind: converter
+        version: 1.2.0
+        published: '2025-09-09'
+        url: https://www.npmjs.com/package/@contensis/html-canvas
+  - name: Forms
+    description: >-
+      Renders forms authored in Contensis into a web project. React implementation plus a
+      framework-agnostic package.
+    repository: https://github.com/contensis/contensis-forms
+    docs: https://www.contensis.com/help-and-docs/guides/forms
+    components:
+      - name: '@contensis/forms'
+        kind: react-component
+        version: 1.0.5
+        published: '2026-04-29'
+        url: https://www.npmjs.com/package/@contensis/forms
+  - name: Personalisation (Experience Engine)
+    description: >-
+      Client-side personalisation — audience/segment evaluation and variant rendering.
+      Both packages are pre-1.0 betas.
+    repository: https://github.com/contensis/experience-engine
+    components:
+      - name: '@contensis/experience-engine'
+        kind: runtime
+        version: 1.0.0-beta.2
+        published: '2026-08-26'
+        url: https://www.npmjs.com/package/@contensis/experience-engine
+      - name: '@contensis/experience-engine-react'
+        kind: react-component
+        version: 1.0.0-beta.0
+        published: '2026-07-03'
+        url: https://www.npmjs.com/package/@contensis/experience-engine-react
+  - name: AI search and chat UI
+    description: >-
+      An accessible AI-powered search and chat modal component library published from the
+      Contensis org, and a React RAG surface.
+    components:
+      - name: insytful-ai-search-components
+        kind: react-component
+        version: 3.2.0
+        published: '2026-08-17'
+        url: https://www.npmjs.com/package/insytful-ai-search-components
+        repository: https://github.com/contensis/insytful-ai-search-components
+      - name: contensis-rag-react
+        kind: react-component
+        version: null
+        published: null
+        repository: https://github.com/contensis/contensis-rag-react
+        note: >-
+          Public repository in the Contensis org with no matching npm publication found, so
+          there is no registry metadata to read a version from.
+  - name: Site frameworks
+    description: >-
+      Not components in the embeddable sense, but the client-side foundations Contensis
+      ships for building the front end.
+    components:
+      - name: '@zengenti/contensis-react-base'
+        kind: framework
+        version: 4.0.0
+        published: '2026-04-22'
+        url: https://www.npmjs.com/package/@zengenti/contensis-react-base
+      - name: leif
+        kind: design-system
+        version: null
+        published: null
+        repository: https://github.com/contensis/leif
+        note: >-
+          Contensis design system. Example integrations are published for React, Vue,
+          Express and Razor Pages in the same org. No registry publication found, so no
+          version is recorded.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

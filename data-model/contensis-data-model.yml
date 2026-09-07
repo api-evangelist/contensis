@@ -1,0 +1,217 @@
+specification: API Commons Data Model
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: derived
+source: >-
+  Derived from openapi/_original/contensis-openapi.yml (components.schemas and the
+  path/parameter graph) in this repo, then enriched from the provider's published object
+  reference at https://www.contensis.com/help-and-docs/apis and its markdown mirror
+  https://github.com/contensis/contensis-docs.
+description: >-
+  The Contensis content graph. Everything hangs off a Project; a Project owns Content Types
+  (and their reusable Components), Entries, Assets, Taxonomy nodes and Site View Nodes.
+  Every resource carries a `sys` metadata block that holds the identity, the language
+  variation and the version state — `sys` is the single most important thing for an agent to
+  understand, because it is where id, contentTypeId, language, dataFormat and the
+  created/modified/published version triple all live.
+identifiers:
+  style: uuid
+  note: >-
+    Entries, assets, nodes and webhook subscriptions are identified by 128-bit GUIDs.
+    Projects, content types, components and fields are identified by author-chosen string
+    ids (e.g. "movieDb", "blog"), not GUIDs — so an id is not uniformly opaque across the
+    API.
+  no_prefixes: >-
+    Contensis does not use typed id prefixes. A bare GUID does not tell a client what kind
+    of resource it names; the containing path or sys.dataFormat does.
+entities:
+  - name: Project
+    id: string (author-chosen)
+    schema: Project
+    fields: [id, name, description, primaryLanguage, supportedLanguages]
+    description: >-
+      The top-level container and the first path segment of every Delivery and Management
+      call. Carries the language configuration that governs every entry beneath it.
+  - name: ContentType
+    id: string (author-chosen)
+    schema: ContentType
+    fields: [id, projectId, description, fields]
+    description: >-
+      The content model. Its `fields` array declares each field's id, dataType and
+      dataFormat — the dataType/dataFormat pair is the Contensis type system.
+  - name: Component
+    id: string (author-chosen)
+    description: >-
+      A reusable group of fields that can be added to a content type. Management API only —
+      not present in the captured Delivery slice.
+  - name: Entry
+    id: uuid
+    schema: Entry
+    fields: [sys, '<content-type-defined fields>']
+    description: >-
+      A content record. The shape above the `sys` block is entirely defined by its content
+      type, so Entry is additionalProperties:true by nature — an agent cannot know an
+      entry's fields without first reading its ContentType.
+  - name: Asset
+    id: uuid
+    description: >-
+      A file resource. Shares the entry topic schema in webhooks and the same workflow
+      states. The Image API applies transformations to asset URLs by query parameter.
+  - name: TaxonomyNode
+    id: string (key or path)
+    description: >-
+      Hierarchical classification, addressable by key or by path. Entries reference taxonomy
+      nodes through taxonomy fields.
+  - name: Node
+    id: uuid
+    description: >-
+      Site View navigation node. A tree over entries — root, children, ancestors, siblings
+      — and the reason an entry can be found by URL path rather than by id.
+  - name: Sys
+    id: n/a
+    description: >-
+      Metadata block embedded in every resource. Not addressable on its own.
+    fields: [id, uri, projectId, contentTypeId, dataFormat, language, metadata, properties, version, owner]
+  - name: Version
+    id: n/a
+    schema: sys.version
+    fields: [createdBy, created, modifiedBy, modified, publishedBy, published, versionNo]
+    description: >-
+      Per-resource version state. The published/latest distinction that `versionStatus`
+      selects against is expressed here.
+  - name: PagedList
+    id: n/a
+    schema: EntryList
+    fields: [pageIndex, pageSize, totalCount, pageCount, items]
+    description: The uniform collection envelope across both APIs.
+  - name: WorkflowDefinition
+    id: string
+    description: >-
+      States and events that govern publication (contensisEntryApproval.*). Drives both the
+      publish/unpublish operations and the workflow webhook topics.
+  - name: WebhookSubscription
+    id: uuid
+    description: >-
+      Event subscription owned by a project. See asyncapi/contensis-webhooks.yml.
+  - name: Error
+    id: n/a
+    fields: [logId, message, data, type]
+    description: The shared failure envelope. See errors/contensis-problem-types.yml.
+relationships:
+  - from: Project
+    to: ContentType
+    type: has_many
+    via: projectId
+    evidence: GET /api/delivery/projects/{projectId}/contenttypes
+  - from: Project
+    to: Entry
+    type: has_many
+    via: sys.projectId
+    evidence: GET /api/delivery/projects/{projectId}/entries
+  - from: Project
+    to: TaxonomyNode
+    type: has_many
+    via: path
+    evidence: GET /api/delivery/projects/{projectId}/taxonomy/nodes
+  - from: Project
+    to: Node
+    type: has_many
+    via: projectId
+    evidence: Delivery API navigation/nodes operations
+  - from: Project
+    to: WebhookSubscription
+    type: has_many
+    via: projectId
+    evidence: Management API events/webhook-subscriptions
+  - from: ContentType
+    to: Project
+    type: belongs_to
+    via: projectId
+    evidence: ContentType.projectId
+  - from: ContentType
+    to: Component
+    type: has_many
+    via: fields[].dataFormat
+    evidence: Management API add-component-to-a-content-type
+  - from: Entry
+    to: ContentType
+    type: belongs_to
+    via: sys.contentTypeId
+    evidence: Entry.sys.contentTypeId
+  - from: Entry
+    to: Project
+    type: belongs_to
+    via: sys.projectId
+    evidence: Entry.sys.projectId
+  - from: Entry
+    to: Entry
+    type: has_many
+    via: linked entry fields (dataFormat entry)
+    evidence: >-
+      linkDepth / fieldLinkDepths query parameters resolve linked entries inline to a
+      maximum depth of 10.
+  - from: Entry
+    to: Asset
+    type: has_many
+    via: asset fields (dataFormat asset)
+    evidence: Same link-resolution mechanism as entry links.
+  - from: Entry
+    to: TaxonomyNode
+    type: has_many
+    via: taxonomy fields
+    evidence: delivery-dotnet/key-concepts/taxonomy-fields
+  - from: Entry
+    to: Version
+    type: has_one
+    via: sys.version
+    evidence: components.schemas.Entry.sys.version
+  - from: Node
+    to: Entry
+    type: has_one
+    via: entryId
+    evidence: GET nodes by entry id / get a node by path
+  - from: Node
+    to: Node
+    type: has_many
+    via: parent/child
+    evidence: get-child-nodes, get-ancestor-nodes, get-sibling-nodes
+  - from: TaxonomyNode
+    to: TaxonomyNode
+    type: has_many
+    via: path
+    evidence: get-taxonomy-nodes-by-path
+  - from: PagedList
+    to: Entry
+    type: has_many
+    via: items
+    evidence: components.schemas.EntryList.items
+  - from: Entry
+    to: WorkflowDefinition
+    type: belongs_to
+    via: workflow state
+    evidence: >-
+      Workflow state ids on entries (contensisEntryApproval.draft, .awaitingApproval,
+      .scheduled, .archived) drive both publication and webhook topics.
+dimensions:
+  language:
+    description: >-
+      Language is a first-class dimension, not a field. An entry exists as a set of language
+      variations; reads take a `language` parameter and a delete can target named variations.
+  version_status:
+    description: >-
+      Every entry has a published projection and a latest (draft) projection, selected by the
+      `versionStatus` parameter. An agent reading without setting it gets `published`.
+gaps:
+  - >-
+    The derived graph above covers the whole documented model, but the OpenAPI it was
+    derived from describes only seven Delivery operations. The Management API's writes,
+    assets, roles, groups, domains, certificates, blocks, renderers and proxies have no
+    machine-readable schema at all.
+  - >-
+    Entry is open-ended by design (additionalProperties). Without reading the project's
+    content types first, a consumer cannot validate an entry payload.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,93 @@
+specification: API Commons ChangeLog
+specificationVersion: '0.1'
+provider: Contensis
+providerId: contensis
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://www.contensis.com/help-and-docs/whats-new (probed 200), the Contensis community
+  blog, and the GitHub Releases feed for the first-party CLI
+  (https://github.com/contensis/cli/releases) plus npm/NuGet registry publish dates.
+description: >-
+  Contensis publishes no dated changelog for its HTTP APIs. What exists is a "What's new"
+  landing page that points at a blog post per product release, and dated release histories
+  for the first-party client packages. The entries below are the dated, versioned records
+  that do exist — they are package and product releases, not API contract changes, and
+  none of them tells a client that an endpoint changed.
+scheme: product-version
+current_version: '17.2'
+api_changelog_published: false
+surfaces:
+  - url: https://www.contensis.com/help-and-docs/whats-new
+    kind: landing page
+    dated: false
+    note: >-
+      Links to a blog post for the latest product release (17.2, "smarter content reviews
+      and AI tools for confident publishing"). No dates, no version list, no per-release
+      detail on the page itself.
+  - url: https://www.contensis.com/community/blog
+    kind: blog
+    dated: true
+    note: Release announcements are published as blog posts among other content.
+  - url: https://github.com/contensis/cli/releases
+    kind: github-releases
+    dated: true
+    note: >-
+      Release Please generates versioned, dated GitHub Releases with changelogs for the
+      CLI. This is the only conventional changelog in the Contensis estate.
+entries:
+  - version: '17.2'
+    date: null
+    kind: product
+    breaking: unknown
+    highlights:
+      - Smarter content reviews and AI tools for confident publishing.
+    source: https://www.contensis.com/help-and-docs/whats-new
+    note: >-
+      No release date is published on the what's-new page. The 17.2.0 .NET clients were
+      published to NuGet on 2026-03-31, which is the nearest dated proxy.
+  - version: Zengenti.Contensis.Delivery / Management 17.2.0
+    date: '2026-03-31'
+    kind: package
+    breaking: unknown
+    highlights:
+      - .NET Delivery and Management clients aligned to the 17.2 product line.
+    source: https://www.nuget.org/packages/Zengenti.Contensis.Delivery
+  - version: '@zengenti/contensis-react-base 4.0.0'
+    date: '2026-04-22'
+    kind: package
+    breaking: true
+    highlights:
+      - React 18 alignment, modernised dependencies, architectural rework.
+    source: https://www.contensis.com/community/blog/introducing-contensis-react-base-4
+  - version: contensis-delivery-api 1.6.2
+    date: '2026-02-10'
+    kind: package
+    breaking: false
+    source: https://www.npmjs.com/package/contensis-delivery-api
+  - version: contensis-cli 1.6.0
+    date: '2025-12-11'
+    kind: package
+    breaking: unknown
+    source: https://github.com/contensis/cli/releases/tag/contensis-cli-v1.6.0
+  - version: contensis-cli 1.5.0
+    date: '2025-09-09'
+    kind: package
+    breaking: unknown
+    source: https://github.com/contensis/cli/releases/tag/contensis-cli-v1.5.0
+  - version: contensis-management-api 2.4.0
+    date: '2025-06-10'
+    kind: package
+    breaking: unknown
+    source: https://www.npmjs.com/package/contensis-management-api
+findings:
+  - >-
+    An integrator cannot subscribe to API changes. There is no feed, no dated entry list
+    and no deprecation notice channel for the Delivery or Management API — only a blog and
+    a landing page.
+  - >-
+    Several reference pages carry a "Page last updated" stamp well behind the product: the
+    Management API error model is dated 21 June 2021, the version model 07 July 2020.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
