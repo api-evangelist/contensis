@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Contensis Delivery API (HTTP) Content Types Projects API
+  title: Contensis Delivery API (HTTP) Projects API
   description: 'The Contensis Delivery API is a read-only RESTful HTTP API that returns
 
     content as JSON (or as resource files for assets) from a Contensis CMS
@@ -9,9 +9,7 @@ info:
 
     project lives on (for example `https://cms.example.contensis.com`). All
 
-    requests target the `/api/delivery` namespace.
-
-    '
+    requests target the `/api/delivery` namespace.'
   version: 1.0.0
   contact:
     name: Contensis Help and Docs
@@ -50,6 +48,8 @@ paths:
                 $ref: '#/components/schemas/Project'
         '404':
           description: Project not found
+      operationId: getApiDeliveryProjectsByProjectId
+      x-operation-id-source: derived
 components:
   schemas:
     Project:

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Contensis Delivery API (HTTP) Content Types Entries API
+  title: Contensis Delivery API (HTTP) Entries API
   description: 'The Contensis Delivery API is a read-only RESTful HTTP API that returns
 
     content as JSON (or as resource files for assets) from a Contensis CMS
@@ -9,9 +9,7 @@ info:
 
     project lives on (for example `https://cms.example.contensis.com`). All
 
-    requests target the `/api/delivery` namespace.
-
-    '
+    requests target the `/api/delivery` namespace.'
   version: 1.0.0
   contact:
     name: Contensis Help and Docs
@@ -79,6 +77,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntryList'
+      operationId: getApiDeliveryProjectsByProjectIdEntries
+      x-operation-id-source: derived
   /api/delivery/projects/{projectId}/entries/{entryId}:
     get:
       tags:
@@ -121,6 +121,8 @@ paths:
                 $ref: '#/components/schemas/Entry'
         '404':
           description: Entry not found
+      operationId: getApiDeliveryProjectsByProjectIdEntriesByEntryId
+      x-operation-id-source: derived
   /api/delivery/projects/{projectId}/entries/search:
     get:
       tags:
@@ -155,8 +157,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntryList'
+      operationId: getApiDeliveryProjectsByProjectIdEntriesSearch
+      x-operation-id-source: derived
 components:
   schemas:
+    EntryList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        pageIndex:
+          type: integer
+        pageSize:
+          type: integer
+        totalCount:
+          type: integer
     Entry:
       type: object
       properties:
@@ -186,16 +203,3 @@ components:
                   type: string
                   format: date-time
       additionalProperties: true
-    EntryList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Entry'
-        pageIndex:
-          type: integer
-        pageSize:
-          type: integer
-        totalCount:
-          type: integer

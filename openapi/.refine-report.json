@@ -1,10 +1,7 @@
 {
   "provider": "contensis",
   "sources": [
-    "contensis-content-types-api-openapi.yml",
-    "contensis-entries-api-openapi.yml",
-    "contensis-projects-api-openapi.yml",
-    "contensis-taxonomy-api-openapi.yml"
+    "_original/contensis-openapi.yml"
   ],
   "outputs": [
     "contensis-content-types-api-openapi.yml",
@@ -16,11 +13,14 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "contensis-content-types-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "contensis-entries-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "contensis-projects-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "contensis-taxonomy-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "contensis-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "contensis-content-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "contensis-entries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "contensis-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "contensis-taxonomy-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

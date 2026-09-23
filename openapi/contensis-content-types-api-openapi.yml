@@ -9,9 +9,7 @@ info:
 
     project lives on (for example `https://cms.example.contensis.com`). All
 
-    requests target the `/api/delivery` namespace.
-
-    '
+    requests target the `/api/delivery` namespace.'
   version: 1.0.0
   contact:
     name: Contensis Help and Docs
@@ -46,6 +44,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ContentType'
+      operationId: getApiDeliveryProjectsByProjectIdContenttypes
+      x-operation-id-source: derived
   /api/delivery/projects/{projectId}/contenttypes/{contentTypeId}:
     get:
       tags:
@@ -69,6 +69,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContentType'
+      operationId: getApiDeliveryProjectsByProjectIdContenttypesByContentTypeId
+      x-operation-id-source: derived
 components:
   schemas:
     ContentType:
