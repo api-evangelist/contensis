@@ -161,19 +161,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    EntryList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Entry'
-        pageIndex:
-          type: integer
-        pageSize:
-          type: integer
-        totalCount:
-          type: integer
     Entry:
       type: object
       properties:
@@ -203,3 +190,16 @@ components:
                   type: string
                   format: date-time
       additionalProperties: true
+    EntryList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        pageIndex:
+          type: integer
+        pageSize:
+          type: integer
+        totalCount:
+          type: integer
