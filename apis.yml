@@ -205,6 +205,8 @@ apis:
   - type: OpenAPI
     url: openapi/contensis-taxonomy-api-openapi.yml
 common:
+  - type: FinOps
+    url: finops/contensis-finops.yml
   - type: AgenticAccess
     url: agentic-access/contensis-agentic-access.yml
   - type: TrustCenter
